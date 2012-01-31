@@ -1,0 +1,427 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3001E90F14D7F8BC00A7D3AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3001E90E14D7F8BC00A7D3AA /* UIKit.framework */; };
+		3001E91114D7F8BC00A7D3AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3001E91014D7F8BC00A7D3AA /* Foundation.framework */; };
+		3001E91314D7F8BC00A7D3AA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3001E91214D7F8BC00A7D3AA /* CoreGraphics.framework */; };
+		3001E91914D7F8BC00A7D3AA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3001E91714D7F8BC00A7D3AA /* InfoPlist.strings */; };
+		3001E91B14D7F8BC00A7D3AA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3001E91A14D7F8BC00A7D3AA /* main.m */; };
+		3001E91F14D7F8BC00A7D3AA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3001E91E14D7F8BC00A7D3AA /* AppDelegate.m */; };
+		3001E92714D7F8BC00A7D3AA /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3001E92614D7F8BC00A7D3AA /* SenTestingKit.framework */; };
+		3001E92814D7F8BC00A7D3AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3001E90E14D7F8BC00A7D3AA /* UIKit.framework */; };
+		3001E92914D7F8BC00A7D3AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3001E91014D7F8BC00A7D3AA /* Foundation.framework */; };
+		3001E93114D7F8BC00A7D3AA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3001E92F14D7F8BC00A7D3AA /* InfoPlist.strings */; };
+		3001E93414D7F8BD00A7D3AA /* KFOL_LiteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3001E93314D7F8BD00A7D3AA /* KFOL_LiteTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3001E92A14D7F8BC00A7D3AA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3001E90114D7F8BC00A7D3AA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3001E90914D7F8BC00A7D3AA;
+			remoteInfo = "KFOL Lite";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3001E90A14D7F8BC00A7D3AA /* KFOL Lite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KFOL Lite.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3001E90E14D7F8BC00A7D3AA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3001E91014D7F8BC00A7D3AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3001E91214D7F8BC00A7D3AA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3001E91614D7F8BC00A7D3AA /* KFOL Lite-Info.plist */ = {isa = PBXFileReference; path = "KFOL Lite-Info.plist"; sourceTree = "<group>"; };
+		3001E91814D7F8BC00A7D3AA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3001E91A14D7F8BC00A7D3AA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3001E91C14D7F8BC00A7D3AA /* KFOL Lite-Prefix.pch */ = {isa = PBXFileReference; path = "KFOL Lite-Prefix.pch"; sourceTree = "<group>"; };
+		3001E91D14D7F8BC00A7D3AA /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		3001E91E14D7F8BC00A7D3AA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		3001E92514D7F8BC00A7D3AA /* KFOL LiteTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KFOL LiteTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3001E92614D7F8BC00A7D3AA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		3001E92E14D7F8BC00A7D3AA /* KFOL LiteTests-Info.plist */ = {isa = PBXFileReference; path = "KFOL LiteTests-Info.plist"; sourceTree = "<group>"; };
+		3001E93014D7F8BC00A7D3AA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3001E93214D7F8BD00A7D3AA /* KFOL_LiteTests.h */ = {isa = PBXFileReference; path = KFOL_LiteTests.h; sourceTree = "<group>"; };
+		3001E93314D7F8BD00A7D3AA /* KFOL_LiteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KFOL_LiteTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3001E90714D7F8BC00A7D3AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3001E90F14D7F8BC00A7D3AA /* UIKit.framework in Frameworks */,
+				3001E91114D7F8BC00A7D3AA /* Foundation.framework in Frameworks */,
+				3001E91314D7F8BC00A7D3AA /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3001E92114D7F8BC00A7D3AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3001E92714D7F8BC00A7D3AA /* SenTestingKit.framework in Frameworks */,
+				3001E92814D7F8BC00A7D3AA /* UIKit.framework in Frameworks */,
+				3001E92914D7F8BC00A7D3AA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3001E8FF14D7F8BC00A7D3AA = {
+			isa = PBXGroup;
+			children = (
+				3001E91414D7F8BC00A7D3AA /* KFOL Lite */,
+				3001E92C14D7F8BC00A7D3AA /* KFOL LiteTests */,
+				3001E90D14D7F8BC00A7D3AA /* Frameworks */,
+				3001E90B14D7F8BC00A7D3AA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3001E90B14D7F8BC00A7D3AA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3001E90A14D7F8BC00A7D3AA /* KFOL Lite.app */,
+				3001E92514D7F8BC00A7D3AA /* KFOL LiteTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3001E90D14D7F8BC00A7D3AA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3001E90E14D7F8BC00A7D3AA /* UIKit.framework */,
+				3001E91014D7F8BC00A7D3AA /* Foundation.framework */,
+				3001E91214D7F8BC00A7D3AA /* CoreGraphics.framework */,
+				3001E92614D7F8BC00A7D3AA /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3001E91414D7F8BC00A7D3AA /* KFOL Lite */ = {
+			isa = PBXGroup;
+			children = (
+				3001E91D14D7F8BC00A7D3AA /* AppDelegate.h */,
+				3001E91E14D7F8BC00A7D3AA /* AppDelegate.m */,
+				3001E91514D7F8BC00A7D3AA /* Supporting Files */,
+			);
+			path = "KFOL Lite";
+			sourceTree = "<group>";
+		};
+		3001E91514D7F8BC00A7D3AA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3001E91614D7F8BC00A7D3AA /* KFOL Lite-Info.plist */,
+				3001E91714D7F8BC00A7D3AA /* InfoPlist.strings */,
+				3001E91A14D7F8BC00A7D3AA /* main.m */,
+				3001E91C14D7F8BC00A7D3AA /* KFOL Lite-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3001E92C14D7F8BC00A7D3AA /* KFOL LiteTests */ = {
+			isa = PBXGroup;
+			children = (
+				3001E93214D7F8BD00A7D3AA /* KFOL_LiteTests.h */,
+				3001E93314D7F8BD00A7D3AA /* KFOL_LiteTests.m */,
+				3001E92D14D7F8BC00A7D3AA /* Supporting Files */,
+			);
+			path = "KFOL LiteTests";
+			sourceTree = "<group>";
+		};
+		3001E92D14D7F8BC00A7D3AA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3001E92E14D7F8BC00A7D3AA /* KFOL LiteTests-Info.plist */,
+				3001E92F14D7F8BC00A7D3AA /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3001E90914D7F8BC00A7D3AA /* KFOL Lite */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3001E93714D7F8BD00A7D3AA /* Build configuration list for PBXNativeTarget "KFOL Lite" */;
+			buildPhases = (
+				3001E90614D7F8BC00A7D3AA /* Sources */,
+				3001E90714D7F8BC00A7D3AA /* Frameworks */,
+				3001E90814D7F8BC00A7D3AA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "KFOL Lite";
+			productName = "KFOL Lite";
+			productReference = 3001E90A14D7F8BC00A7D3AA /* KFOL Lite.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3001E92414D7F8BC00A7D3AA /* KFOL LiteTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3001E93A14D7F8BD00A7D3AA /* Build configuration list for PBXNativeTarget "KFOL LiteTests" */;
+			buildPhases = (
+				3001E92014D7F8BC00A7D3AA /* Sources */,
+				3001E92114D7F8BC00A7D3AA /* Frameworks */,
+				3001E92214D7F8BC00A7D3AA /* Resources */,
+				3001E92314D7F8BC00A7D3AA /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3001E92B14D7F8BC00A7D3AA /* PBXTargetDependency */,
+			);
+			name = "KFOL LiteTests";
+			productName = "KFOL LiteTests";
+			productReference = 3001E92514D7F8BC00A7D3AA /* KFOL LiteTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3001E90114D7F8BC00A7D3AA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = CDUESTC;
+			};
+			buildConfigurationList = 3001E90414D7F8BC00A7D3AA /* Build configuration list for PBXProject "KFOL Lite" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3001E8FF14D7F8BC00A7D3AA;
+			productRefGroup = 3001E90B14D7F8BC00A7D3AA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3001E90914D7F8BC00A7D3AA /* KFOL Lite */,
+				3001E92414D7F8BC00A7D3AA /* KFOL LiteTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3001E90814D7F8BC00A7D3AA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3001E91914D7F8BC00A7D3AA /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3001E92214D7F8BC00A7D3AA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3001E93114D7F8BC00A7D3AA /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3001E92314D7F8BC00A7D3AA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3001E90614D7F8BC00A7D3AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3001E91B14D7F8BC00A7D3AA /* main.m in Sources */,
+				3001E91F14D7F8BC00A7D3AA /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3001E92014D7F8BC00A7D3AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3001E93414D7F8BD00A7D3AA /* KFOL_LiteTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3001E92B14D7F8BC00A7D3AA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3001E90914D7F8BC00A7D3AA /* KFOL Lite */;
+			targetProxy = 3001E92A14D7F8BC00A7D3AA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3001E91714D7F8BC00A7D3AA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3001E91814D7F8BC00A7D3AA /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3001E92F14D7F8BC00A7D3AA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3001E93014D7F8BC00A7D3AA /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3001E93514D7F8BD00A7D3AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3001E93614D7F8BD00A7D3AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3001E93814D7F8BD00A7D3AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "KFOL Lite/KFOL Lite-Prefix.pch";
+				INFOPLIST_FILE = "KFOL Lite/KFOL Lite-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		3001E93914D7F8BD00A7D3AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "KFOL Lite/KFOL Lite-Prefix.pch";
+				INFOPLIST_FILE = "KFOL Lite/KFOL Lite-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		3001E93B14D7F8BD00A7D3AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/KFOL Lite.app/KFOL Lite";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "KFOL Lite/KFOL Lite-Prefix.pch";
+				INFOPLIST_FILE = "KFOL LiteTests/KFOL LiteTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		3001E93C14D7F8BD00A7D3AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/KFOL Lite.app/KFOL Lite";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "KFOL Lite/KFOL Lite-Prefix.pch";
+				INFOPLIST_FILE = "KFOL LiteTests/KFOL LiteTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3001E90414D7F8BC00A7D3AA /* Build configuration list for PBXProject "KFOL Lite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3001E93514D7F8BD00A7D3AA /* Debug */,
+				3001E93614D7F8BD00A7D3AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3001E93714D7F8BD00A7D3AA /* Build configuration list for PBXNativeTarget "KFOL Lite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3001E93814D7F8BD00A7D3AA /* Debug */,
+				3001E93914D7F8BD00A7D3AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		3001E93A14D7F8BD00A7D3AA /* Build configuration list for PBXNativeTarget "KFOL LiteTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3001E93B14D7F8BD00A7D3AA /* Debug */,
+				3001E93C14D7F8BD00A7D3AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3001E90114D7F8BC00A7D3AA /* Project object */;
+}
