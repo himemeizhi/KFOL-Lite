@@ -7,8 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "indexTableViewController.h"
+#import "MessageTableViewController.h"
+
+//#import "NSString+CommunicationKF.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+{
+    UITabBarController *TabBarController;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

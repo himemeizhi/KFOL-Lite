@@ -18,6 +18,20 @@
 		3001E92914D7F8BC00A7D3AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3001E91014D7F8BC00A7D3AA /* Foundation.framework */; };
 		3001E93114D7F8BC00A7D3AA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3001E92F14D7F8BC00A7D3AA /* InfoPlist.strings */; };
 		3001E93414D7F8BD00A7D3AA /* KFOL_LiteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3001E93314D7F8BD00A7D3AA /* KFOL_LiteTests.m */; };
+		3001E94914D81B7F00A7D3AA /* NSString+CommunicationKF.m in Sources */ = {isa = PBXBuildFile; fileRef = 3001E94814D81B7E00A7D3AA /* NSString+CommunicationKF.m */; };
+		3001E94C14D81BB000A7D3AA /* indexTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3001E94B14D81BB000A7D3AA /* indexTableViewController.m */; };
+		3001E94F14D81BC700A7D3AA /* ThreadTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3001E94E14D81BC700A7D3AA /* ThreadTableViewController.m */; };
+		3001E95214D81BDC00A7D3AA /* PostTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3001E95114D81BDC00A7D3AA /* PostTableViewController.m */; };
+		3007066514DAAC200051C804 /* MessageReadTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3007066414DAAC200051C804 /* MessageReadTableViewController.m */; };
+		30331A9414D964FA007406E9 /* baka⑨(57).png in Resources */ = {isa = PBXBuildFile; fileRef = 30331A9314D964FA007406E9 /* baka⑨(57).png */; };
+		30331A9714D96500007406E9 /* baka⑨(114).png in Resources */ = {isa = PBXBuildFile; fileRef = 30331A9614D96500007406E9 /* baka⑨(114).png */; };
+		30331AB714DA031A007406E9 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30331AB614DA031A007406E9 /* UserCell.xib */; };
+		3040097D14F5160700F285A3 /* NewTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3040097C14F5160700F285A3 /* NewTopicViewController.m */; };
+		304FD9C114F7736E000A27D1 /* LoginTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 304FD9C014F7736E000A27D1 /* LoginTableView.m */; };
+		3063F4D814E441DD00A435D4 /* ReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3063F4D714E441DD00A435D4 /* ReplyViewController.m */; };
+		30975A5314F274AE00650C95 /* PostReadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30975A5214F274AE00650C95 /* PostReadView.m */; };
+		3098904714E425C10034040F /* ReadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3098904614E425C10034040F /* ReadView.m */; };
+		30CDD20714DA730E008E4F1F /* MessageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30CDD20614DA730E008E4F1F /* MessageTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,18 +49,43 @@
 		3001E90E14D7F8BC00A7D3AA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3001E91014D7F8BC00A7D3AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3001E91214D7F8BC00A7D3AA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		3001E91614D7F8BC00A7D3AA /* KFOL Lite-Info.plist */ = {isa = PBXFileReference; path = "KFOL Lite-Info.plist"; sourceTree = "<group>"; };
+		3001E91614D7F8BC00A7D3AA /* KFOL Lite-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KFOL Lite-Info.plist"; sourceTree = "<group>"; };
 		3001E91814D7F8BC00A7D3AA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3001E91A14D7F8BC00A7D3AA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		3001E91C14D7F8BC00A7D3AA /* KFOL Lite-Prefix.pch */ = {isa = PBXFileReference; path = "KFOL Lite-Prefix.pch"; sourceTree = "<group>"; };
-		3001E91D14D7F8BC00A7D3AA /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		3001E91C14D7F8BC00A7D3AA /* KFOL Lite-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KFOL Lite-Prefix.pch"; sourceTree = "<group>"; };
+		3001E91D14D7F8BC00A7D3AA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3001E91E14D7F8BC00A7D3AA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3001E92514D7F8BC00A7D3AA /* KFOL LiteTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KFOL LiteTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3001E92614D7F8BC00A7D3AA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		3001E92E14D7F8BC00A7D3AA /* KFOL LiteTests-Info.plist */ = {isa = PBXFileReference; path = "KFOL LiteTests-Info.plist"; sourceTree = "<group>"; };
+		3001E92E14D7F8BC00A7D3AA /* KFOL LiteTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KFOL LiteTests-Info.plist"; sourceTree = "<group>"; };
 		3001E93014D7F8BC00A7D3AA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3001E93214D7F8BD00A7D3AA /* KFOL_LiteTests.h */ = {isa = PBXFileReference; path = KFOL_LiteTests.h; sourceTree = "<group>"; };
+		3001E93214D7F8BD00A7D3AA /* KFOL_LiteTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KFOL_LiteTests.h; sourceTree = "<group>"; };
 		3001E93314D7F8BD00A7D3AA /* KFOL_LiteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KFOL_LiteTests.m; sourceTree = "<group>"; };
+		3001E94714D81B7E00A7D3AA /* NSString+CommunicationKF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CommunicationKF.h"; sourceTree = "<group>"; };
+		3001E94814D81B7E00A7D3AA /* NSString+CommunicationKF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CommunicationKF.m"; sourceTree = "<group>"; };
+		3001E94A14D81BB000A7D3AA /* indexTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = indexTableViewController.h; sourceTree = "<group>"; };
+		3001E94B14D81BB000A7D3AA /* indexTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = indexTableViewController.m; sourceTree = "<group>"; };
+		3001E94D14D81BC700A7D3AA /* ThreadTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadTableViewController.h; sourceTree = "<group>"; };
+		3001E94E14D81BC700A7D3AA /* ThreadTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadTableViewController.m; sourceTree = "<group>"; };
+		3001E95014D81BDC00A7D3AA /* PostTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostTableViewController.h; sourceTree = "<group>"; };
+		3001E95114D81BDC00A7D3AA /* PostTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostTableViewController.m; sourceTree = "<group>"; };
+		3007066314DAAC200051C804 /* MessageReadTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageReadTableViewController.h; sourceTree = "<group>"; };
+		3007066414DAAC200051C804 /* MessageReadTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageReadTableViewController.m; sourceTree = "<group>"; };
+		30331A9314D964FA007406E9 /* baka⑨(57).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "baka⑨(57).png"; sourceTree = "<group>"; };
+		30331A9614D96500007406E9 /* baka⑨(114).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "baka⑨(114).png"; sourceTree = "<group>"; };
+		30331AB614DA031A007406E9 /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
+		3040097B14F5160700F285A3 /* NewTopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTopicViewController.h; sourceTree = "<group>"; };
+		3040097C14F5160700F285A3 /* NewTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTopicViewController.m; sourceTree = "<group>"; };
+		304FD9BF14F7736E000A27D1 /* LoginTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTableView.h; sourceTree = "<group>"; };
+		304FD9C014F7736E000A27D1 /* LoginTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTableView.m; sourceTree = "<group>"; };
+		3063F4D614E441DD00A435D4 /* ReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReplyViewController.h; sourceTree = "<group>"; };
+		3063F4D714E441DD00A435D4 /* ReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReplyViewController.m; sourceTree = "<group>"; };
+		30975A5114F274AE00650C95 /* PostReadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostReadView.h; sourceTree = "<group>"; };
+		30975A5214F274AE00650C95 /* PostReadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostReadView.m; sourceTree = "<group>"; };
+		3098904514E425C10034040F /* ReadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReadView.h; path = ../ReadView.h; sourceTree = "<group>"; };
+		3098904614E425C10034040F /* ReadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReadView.m; path = ../ReadView.m; sourceTree = "<group>"; };
+		30CDD20514DA730E008E4F1F /* MessageTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewController.h; sourceTree = "<group>"; };
+		30CDD20614DA730E008E4F1F /* MessageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +115,8 @@
 		3001E8FF14D7F8BC00A7D3AA = {
 			isa = PBXGroup;
 			children = (
+				30331A9614D96500007406E9 /* baka⑨(114).png */,
+				30331A9314D964FA007406E9 /* baka⑨(57).png */,
 				3001E91414D7F8BC00A7D3AA /* KFOL Lite */,
 				3001E92C14D7F8BC00A7D3AA /* KFOL LiteTests */,
 				3001E90D14D7F8BC00A7D3AA /* Frameworks */,
@@ -109,6 +150,27 @@
 				3001E91D14D7F8BC00A7D3AA /* AppDelegate.h */,
 				3001E91E14D7F8BC00A7D3AA /* AppDelegate.m */,
 				3001E91514D7F8BC00A7D3AA /* Supporting Files */,
+				3001E94A14D81BB000A7D3AA /* indexTableViewController.h */,
+				3001E94B14D81BB000A7D3AA /* indexTableViewController.m */,
+				3001E94D14D81BC700A7D3AA /* ThreadTableViewController.h */,
+				3001E94E14D81BC700A7D3AA /* ThreadTableViewController.m */,
+				3001E95014D81BDC00A7D3AA /* PostTableViewController.h */,
+				3001E95114D81BDC00A7D3AA /* PostTableViewController.m */,
+				30CDD20514DA730E008E4F1F /* MessageTableViewController.h */,
+				30CDD20614DA730E008E4F1F /* MessageTableViewController.m */,
+				3007066314DAAC200051C804 /* MessageReadTableViewController.h */,
+				3007066414DAAC200051C804 /* MessageReadTableViewController.m */,
+				3098904514E425C10034040F /* ReadView.h */,
+				3098904614E425C10034040F /* ReadView.m */,
+				3040097B14F5160700F285A3 /* NewTopicViewController.h */,
+				3040097C14F5160700F285A3 /* NewTopicViewController.m */,
+				30975A5114F274AE00650C95 /* PostReadView.h */,
+				30975A5214F274AE00650C95 /* PostReadView.m */,
+				3063F4D614E441DD00A435D4 /* ReplyViewController.h */,
+				3063F4D714E441DD00A435D4 /* ReplyViewController.m */,
+				304FD9BF14F7736E000A27D1 /* LoginTableView.h */,
+				304FD9C014F7736E000A27D1 /* LoginTableView.m */,
+				30331AB614DA031A007406E9 /* UserCell.xib */,
 			);
 			path = "KFOL Lite";
 			sourceTree = "<group>";
@@ -116,6 +178,8 @@
 		3001E91514D7F8BC00A7D3AA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3001E94714D81B7E00A7D3AA /* NSString+CommunicationKF.h */,
+				3001E94814D81B7E00A7D3AA /* NSString+CommunicationKF.m */,
 				3001E91614D7F8BC00A7D3AA /* KFOL Lite-Info.plist */,
 				3001E91714D7F8BC00A7D3AA /* InfoPlist.strings */,
 				3001E91A14D7F8BC00A7D3AA /* main.m */,
@@ -215,6 +279,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3001E91914D7F8BC00A7D3AA /* InfoPlist.strings in Resources */,
+				30331A9414D964FA007406E9 /* baka⑨(57).png in Resources */,
+				30331A9714D96500007406E9 /* baka⑨(114).png in Resources */,
+				30331AB714DA031A007406E9 /* UserCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +318,17 @@
 			files = (
 				3001E91B14D7F8BC00A7D3AA /* main.m in Sources */,
 				3001E91F14D7F8BC00A7D3AA /* AppDelegate.m in Sources */,
+				3001E94914D81B7F00A7D3AA /* NSString+CommunicationKF.m in Sources */,
+				3001E94C14D81BB000A7D3AA /* indexTableViewController.m in Sources */,
+				3001E94F14D81BC700A7D3AA /* ThreadTableViewController.m in Sources */,
+				3001E95214D81BDC00A7D3AA /* PostTableViewController.m in Sources */,
+				30CDD20714DA730E008E4F1F /* MessageTableViewController.m in Sources */,
+				3007066514DAAC200051C804 /* MessageReadTableViewController.m in Sources */,
+				3098904714E425C10034040F /* ReadView.m in Sources */,
+				3063F4D814E441DD00A435D4 /* ReplyViewController.m in Sources */,
+				30975A5314F274AE00650C95 /* PostReadView.m in Sources */,
+				3040097D14F5160700F285A3 /* NewTopicViewController.m in Sources */,
+				304FD9C114F7736E000A27D1 /* LoginTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +471,54 @@
 			};
 			name = Release;
 		};
+		309AB16814F66393004242AD /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Distribution;
+		};
+		309AB16914F66393004242AD /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "KFOL Lite/KFOL Lite-Prefix.pch";
+				INFOPLIST_FILE = "KFOL Lite/KFOL Lite-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Distribution;
+		};
+		309AB16A14F66393004242AD /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/KFOL Lite.app/KFOL Lite";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "KFOL Lite/KFOL Lite-Prefix.pch";
+				INFOPLIST_FILE = "KFOL LiteTests/KFOL LiteTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Distribution;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -401,6 +527,7 @@
 			buildConfigurations = (
 				3001E93514D7F8BD00A7D3AA /* Debug */,
 				3001E93614D7F8BD00A7D3AA /* Release */,
+				309AB16814F66393004242AD /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -410,16 +537,20 @@
 			buildConfigurations = (
 				3001E93814D7F8BD00A7D3AA /* Debug */,
 				3001E93914D7F8BD00A7D3AA /* Release */,
+				309AB16914F66393004242AD /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3001E93A14D7F8BD00A7D3AA /* Build configuration list for PBXNativeTarget "KFOL LiteTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3001E93B14D7F8BD00A7D3AA /* Debug */,
 				3001E93C14D7F8BD00A7D3AA /* Release */,
+				309AB16A14F66393004242AD /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
