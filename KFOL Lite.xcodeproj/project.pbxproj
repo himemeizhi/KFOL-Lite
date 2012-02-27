@@ -27,10 +27,10 @@
 		30331A9714D96500007406E9 /* baka⑨(114).png in Resources */ = {isa = PBXBuildFile; fileRef = 30331A9614D96500007406E9 /* baka⑨(114).png */; };
 		30331AB714DA031A007406E9 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30331AB614DA031A007406E9 /* UserCell.xib */; };
 		3040097D14F5160700F285A3 /* NewTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3040097C14F5160700F285A3 /* NewTopicViewController.m */; };
-		304FD9C114F7736E000A27D1 /* LoginTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 304FD9C014F7736E000A27D1 /* LoginTableView.m */; };
 		3063F4D814E441DD00A435D4 /* ReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3063F4D714E441DD00A435D4 /* ReplyViewController.m */; };
 		30975A5314F274AE00650C95 /* PostReadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30975A5214F274AE00650C95 /* PostReadView.m */; };
 		3098904714E425C10034040F /* ReadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3098904614E425C10034040F /* ReadView.m */; };
+		309A86F614FA0C05005C0A00 /* LoginTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 309A86F514FA0C05005C0A00 /* LoginTableViewController.m */; };
 		30CDD20714DA730E008E4F1F /* MessageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30CDD20614DA730E008E4F1F /* MessageTableViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -76,14 +76,14 @@
 		30331AB614DA031A007406E9 /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		3040097B14F5160700F285A3 /* NewTopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTopicViewController.h; sourceTree = "<group>"; };
 		3040097C14F5160700F285A3 /* NewTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTopicViewController.m; sourceTree = "<group>"; };
-		304FD9BF14F7736E000A27D1 /* LoginTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTableView.h; sourceTree = "<group>"; };
-		304FD9C014F7736E000A27D1 /* LoginTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTableView.m; sourceTree = "<group>"; };
 		3063F4D614E441DD00A435D4 /* ReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReplyViewController.h; sourceTree = "<group>"; };
 		3063F4D714E441DD00A435D4 /* ReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReplyViewController.m; sourceTree = "<group>"; };
 		30975A5114F274AE00650C95 /* PostReadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostReadView.h; sourceTree = "<group>"; };
 		30975A5214F274AE00650C95 /* PostReadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostReadView.m; sourceTree = "<group>"; };
 		3098904514E425C10034040F /* ReadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReadView.h; path = ../ReadView.h; sourceTree = "<group>"; };
 		3098904614E425C10034040F /* ReadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReadView.m; path = ../ReadView.m; sourceTree = "<group>"; };
+		309A86F414FA0C05005C0A00 /* LoginTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTableViewController.h; sourceTree = "<group>"; };
+		309A86F514FA0C05005C0A00 /* LoginTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTableViewController.m; sourceTree = "<group>"; };
 		30CDD20514DA730E008E4F1F /* MessageTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewController.h; sourceTree = "<group>"; };
 		30CDD20614DA730E008E4F1F /* MessageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -168,8 +168,8 @@
 				30975A5214F274AE00650C95 /* PostReadView.m */,
 				3063F4D614E441DD00A435D4 /* ReplyViewController.h */,
 				3063F4D714E441DD00A435D4 /* ReplyViewController.m */,
-				304FD9BF14F7736E000A27D1 /* LoginTableView.h */,
-				304FD9C014F7736E000A27D1 /* LoginTableView.m */,
+				309A86F414FA0C05005C0A00 /* LoginTableViewController.h */,
+				309A86F514FA0C05005C0A00 /* LoginTableViewController.m */,
 				30331AB614DA031A007406E9 /* UserCell.xib */,
 			);
 			path = "KFOL Lite";
@@ -217,6 +217,7 @@
 				3001E90614D7F8BC00A7D3AA /* Sources */,
 				3001E90714D7F8BC00A7D3AA /* Frameworks */,
 				3001E90814D7F8BC00A7D3AA /* Resources */,
+				308729FA14FA291600327280 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -309,6 +310,19 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		308729FA14FA291600327280 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export CODESIGN_ALLOCATE=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/codesign_allocate\nif [ \"${PLATFORM_NAME}\" == \"iphoneos\" ]; then\n/Developer/xcode-crack/gen_entitlements.py \"my.company.${PROJECT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\";\ncodesign -f -s \"iPhone Developer\" --entitlements \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/\"\nfi";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -328,7 +342,7 @@
 				3063F4D814E441DD00A435D4 /* ReplyViewController.m in Sources */,
 				30975A5314F274AE00650C95 /* PostReadView.m in Sources */,
 				3040097D14F5160700F285A3 /* NewTopicViewController.m in Sources */,
-				304FD9C114F7736E000A27D1 /* LoginTableView.m in Sources */,
+				309A86F614FA0C05005C0A00 /* LoginTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +432,7 @@
 		3001E93814D7F8BD00A7D3AA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KFOL Lite/KFOL Lite-Prefix.pch";
 				INFOPLIST_FILE = "KFOL Lite/KFOL Lite-Info.plist";
@@ -429,6 +444,7 @@
 		3001E93914D7F8BD00A7D3AA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KFOL Lite/KFOL Lite-Prefix.pch";
 				INFOPLIST_FILE = "KFOL Lite/KFOL Lite-Info.plist";

@@ -60,6 +60,7 @@
     NSMutableString *processingNSString=[[NSMutableString alloc]initWithData:post_php_html encoding:0x80000632];
     NSMutableDictionary *postDetails;
     postArray=[[NSMutableArray alloc]init];
+    self.tableView.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
 
     
     for(;;)
@@ -103,7 +104,6 @@
             processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"随时删除）')\">["])];
             [postDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"]"].location)] forKey:@"UserFriends"];
         }
-        
         processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"<b>"])];
         [postDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</b>"].location)] forKey:@"StageNum"];
         if([processingNSString rangeOfString:@"kf_vmember.php"].location < [processingNSString rangeOfString:@"发表于："].location)
@@ -123,6 +123,7 @@
         [postDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</div>\r\n"].location)] forKey:@"PostContent"];
         
         [postArray addObject:postDetails];
+        NSLog(postDetails.description);
         if ([processingNSString rangeOfString:@"<a href=\"profile.php?action=show"].location==NSNotFound) {
             if ([processingNSString rangeOfString:@"\"verify\" value=\""].location!=NSNotFound) {
                 processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"\"verify\" value=\""])];
@@ -268,8 +269,10 @@
 //                    NSLog([[postArray objectAtIndex:indexPath.row/2]objectForKey:@"PostContent"]);NSLog(@"qwertyui");
                     NSMutableString *postSizeCheckString=[[NSMutableString alloc]initWithString:[[postArray objectAtIndex:indexPath.row/2]objectForKey:@"PostContent"]];
                     while([postSizeCheckString rangeOfString:@"if(this.width>'700')this.width='700';"].location!=NSNotFound) {
-                        [postSizeCheckString replaceCharactersInRange:[postSizeCheckString rangeOfString:@"if(this.width>'700')this.width='700';"] withString:@"if(this.width>'300')this.width='300';"];
-                    }
+                        [postSizeCheckString replaceCharactersInRange:[postSizeCheckString rangeOfString:@"if(this.width>'700')this.width='700';"] withString:@"if(this.width>'300')this.width='300';"];NSLog(@"awsedtfhyujk");
+                    }//NSLog(postSizeCheckString);
+                    cell.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
+//                    webview.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
                     [webview loadHTMLString:[[@"<style type=\"text/css\">blockquote{border:1px solid #9999ff;padding:5px;margin:0;}</style><div style='background-color:#f7f7ff;color:#300060;'>" stringByAppendingString:postSizeCheckString]stringByAppendingString:@"</div>"] baseURL:[NSURL URLWithString:@"http://bbs.9gal.com"]];
                     webview.scrollView.scrollEnabled=NO;
                     break;

@@ -10,7 +10,7 @@
 #import "ThreadTableViewController.h"
 #import "NSString+CommunicationKF.h"
 #import "MessageTableViewController.h"
-#import "LoginTableView.h"
+#import "LoginTableViewController.h"
 
 @interface indexTableViewController : UITableViewController
 {

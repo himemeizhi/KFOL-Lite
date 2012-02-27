@@ -1,44 +1,41 @@
 //
-//  LoginTableView.m
+//  LoginTableViewController.m
 //  KFOL Lite
 //
-//  Created by 七音 姫宮 on 2/24/12.
+//  Created by 七音 姫宮 on 2/26/12.
 //  Copyright (c) 2012 CDUESTC. All rights reserved.
 //
 
-#import "LoginTableView.h"
+#import "LoginTableViewController.h"
 
 
-@implementation LoginTableView
+@implementation LoginTableViewController
 
 @synthesize messageTable;
 @synthesize indexTable;
 
--(id)cancel:(id)sender
+-(void)login
 {
-    [self dismissModalViewControllerAnimated:YES];
-    [indexTable becomeFirstResponder];
-    NSLog(@"asdfg");
-}
-
--(id)login:(id)sender
-{
-/*    [@"login.php" postWithStringContent:[NSString stringWithFormat:@"pwuser=%@&pwpwd=%@&step=2",UsernameTextField.text,passwordTextField.text] returnResponse:nil error:nil];
+    [@"login.php" postWithStringContent:[NSString stringWithFormat:@"pwuser=%@&pwpwd=%@&step=2",usernameTextField.text,passwordTextField.text] returnResponse:nil error:nil];
     [indexTable viewDidLoad];
     [indexTable.tableView reloadData];
     [messageTable viewDidLoad];
     [messageTable.tableView reloadData];
     
     [self dismissModalViewControllerAnimated:YES];
-    */
+}
+
+-(void)cancel
+{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (textField==UsernameTextField) 
+    if (textField==usernameTextField) 
         [passwordTextField becomeFirstResponder];
     if (textField==passwordTextField)
-        [self login:nil];
+        [self login];
     return YES;
 }
 
@@ -64,23 +61,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(login:)];
-    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel:)];
 
-    UsernameTextField=[[UITextField alloc]initWithFrame:CGRectMake(15, 10, [UIScreen mainScreen].bounds.size.width, 45)];
-    UsernameTextField.placeholder=@"username";
-    [UsernameTextField becomeFirstResponder];
-    UsernameTextField.autocapitalizationType=UITextAutocapitalizationTypeNone;
-    UsernameTextField.autocorrectionType=UITextAutocorrectionTypeNo;
-    UsernameTextField.enablesReturnKeyAutomatically=YES;
-    UsernameTextField.delegate=self;
-    UsernameTextField.returnKeyType=UIReturnKeyNext;
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(login)];
+    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+    
+    usernameTextField=[[UITextField alloc]initWithFrame:CGRectMake(15, 10, [UIScreen mainScreen].bounds.size.width, 45)];
+    usernameTextField.placeholder=@"username";
+    [usernameTextField becomeFirstResponder];
+    usernameTextField.autocapitalizationType=UITextAutocapitalizationTypeNone;
+    usernameTextField.autocorrectionType=UITextAutocorrectionTypeNo;
+    usernameTextField.enablesReturnKeyAutomatically=YES;
+    usernameTextField.delegate=self;
+    usernameTextField.returnKeyType=UIReturnKeyNext;
     
     
     passwordTextField=[[UITextField alloc]initWithFrame:CGRectMake(15, 10, [UIScreen mainScreen].bounds.size.width, 45)];
     passwordTextField.placeholder=@"password";
     passwordTextField.autocapitalizationType=UITextAutocapitalizationTypeNone;
     passwordTextField.secureTextEntry=YES;
+    passwordTextField.delegate=self;
     passwordTextField.returnKeyType=UIReturnKeyGo;
     
     // Uncomment the following line to preserve selection between presentations.
@@ -148,7 +147,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         switch (indexPath.row) {
             case 0:
-                [cell addSubview:UsernameTextField];
+                [cell addSubview:usernameTextField];
                 break;
             case 1:
                 [cell addSubview:passwordTextField];

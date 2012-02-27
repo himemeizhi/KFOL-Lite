@@ -60,6 +60,7 @@
         return;
     }
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"NewTopic" style:UIBarButtonItemStylePlain target:self action:@selector(newTopic)];
+    self.tableView.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
 
 //    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"KFOL" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonPressed:)];
     
