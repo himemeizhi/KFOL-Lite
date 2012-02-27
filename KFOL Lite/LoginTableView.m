@@ -18,7 +18,6 @@
 {
     [self dismissModalViewControllerAnimated:YES];
     [indexTable becomeFirstResponder];
-    NSLog(@"asdfg");
 }
 
 -(id)login:(id)sender

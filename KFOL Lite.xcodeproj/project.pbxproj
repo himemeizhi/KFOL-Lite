@@ -32,6 +32,12 @@
 		30975A5314F274AE00650C95 /* PostReadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30975A5214F274AE00650C95 /* PostReadView.m */; };
 		3098904714E425C10034040F /* ReadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3098904614E425C10034040F /* ReadView.m */; };
 		30CDD20714DA730E008E4F1F /* MessageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30CDD20614DA730E008E4F1F /* MessageTableViewController.m */; };
+		30FF726514FB3D3A00F53DA1 /* headtopic_1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 30FF725F14FB3D3A00F53DA1 /* headtopic_1.gif */; };
+		30FF726614FB3D3A00F53DA1 /* headtopic_2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 30FF726014FB3D3A00F53DA1 /* headtopic_2.gif */; };
+		30FF726714FB3D3A00F53DA1 /* headtopic_3.gif in Resources */ = {isa = PBXBuildFile; fileRef = 30FF726114FB3D3A00F53DA1 /* headtopic_3.gif */; };
+		30FF726814FB3D3A00F53DA1 /* topichot.gif in Resources */ = {isa = PBXBuildFile; fileRef = 30FF726214FB3D3A00F53DA1 /* topichot.gif */; };
+		30FF726914FB3D3A00F53DA1 /* topiclock.gif in Resources */ = {isa = PBXBuildFile; fileRef = 30FF726314FB3D3A00F53DA1 /* topiclock.gif */; };
+		30FF726A14FB3D3A00F53DA1 /* topicnew.gif in Resources */ = {isa = PBXBuildFile; fileRef = 30FF726414FB3D3A00F53DA1 /* topicnew.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,8 +77,8 @@
 		3001E95114D81BDC00A7D3AA /* PostTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostTableViewController.m; sourceTree = "<group>"; };
 		3007066314DAAC200051C804 /* MessageReadTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageReadTableViewController.h; sourceTree = "<group>"; };
 		3007066414DAAC200051C804 /* MessageReadTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageReadTableViewController.m; sourceTree = "<group>"; };
-		30331A9314D964FA007406E9 /* baka⑨(57).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "baka⑨(57).png"; sourceTree = "<group>"; };
-		30331A9614D96500007406E9 /* baka⑨(114).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "baka⑨(114).png"; sourceTree = "<group>"; };
+		30331A9314D964FA007406E9 /* baka⑨(57).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "baka⑨(57).png"; path = "../baka⑨(57).png"; sourceTree = "<group>"; };
+		30331A9614D96500007406E9 /* baka⑨(114).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "baka⑨(114).png"; path = "../baka⑨(114).png"; sourceTree = "<group>"; };
 		30331AB614DA031A007406E9 /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		3040097B14F5160700F285A3 /* NewTopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTopicViewController.h; sourceTree = "<group>"; };
 		3040097C14F5160700F285A3 /* NewTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTopicViewController.m; sourceTree = "<group>"; };
@@ -86,6 +92,12 @@
 		3098904614E425C10034040F /* ReadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReadView.m; path = ../ReadView.m; sourceTree = "<group>"; };
 		30CDD20514DA730E008E4F1F /* MessageTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewController.h; sourceTree = "<group>"; };
 		30CDD20614DA730E008E4F1F /* MessageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewController.m; sourceTree = "<group>"; };
+		30FF725F14FB3D3A00F53DA1 /* headtopic_1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = headtopic_1.gif; path = ../../../Pictures/headtopic_1.gif; sourceTree = "<group>"; };
+		30FF726014FB3D3A00F53DA1 /* headtopic_2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = headtopic_2.gif; path = ../../../Pictures/headtopic_2.gif; sourceTree = "<group>"; };
+		30FF726114FB3D3A00F53DA1 /* headtopic_3.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = headtopic_3.gif; path = ../../../Pictures/headtopic_3.gif; sourceTree = "<group>"; };
+		30FF726214FB3D3A00F53DA1 /* topichot.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = topichot.gif; path = ../../../Pictures/topichot.gif; sourceTree = "<group>"; };
+		30FF726314FB3D3A00F53DA1 /* topiclock.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = topiclock.gif; path = ../../../Pictures/topiclock.gif; sourceTree = "<group>"; };
+		30FF726414FB3D3A00F53DA1 /* topicnew.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = topicnew.gif; path = ../../../Pictures/topicnew.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +127,6 @@
 		3001E8FF14D7F8BC00A7D3AA = {
 			isa = PBXGroup;
 			children = (
-				30331A9614D96500007406E9 /* baka⑨(114).png */,
-				30331A9314D964FA007406E9 /* baka⑨(57).png */,
 				3001E91414D7F8BC00A7D3AA /* KFOL Lite */,
 				3001E92C14D7F8BC00A7D3AA /* KFOL LiteTests */,
 				3001E90D14D7F8BC00A7D3AA /* Frameworks */,
@@ -184,6 +194,14 @@
 				3001E91714D7F8BC00A7D3AA /* InfoPlist.strings */,
 				3001E91A14D7F8BC00A7D3AA /* main.m */,
 				3001E91C14D7F8BC00A7D3AA /* KFOL Lite-Prefix.pch */,
+				30331A9614D96500007406E9 /* baka⑨(114).png */,
+				30331A9314D964FA007406E9 /* baka⑨(57).png */,
+				30FF725F14FB3D3A00F53DA1 /* headtopic_1.gif */,
+				30FF726014FB3D3A00F53DA1 /* headtopic_2.gif */,
+				30FF726114FB3D3A00F53DA1 /* headtopic_3.gif */,
+				30FF726214FB3D3A00F53DA1 /* topichot.gif */,
+				30FF726314FB3D3A00F53DA1 /* topiclock.gif */,
+				30FF726414FB3D3A00F53DA1 /* topicnew.gif */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -217,6 +235,7 @@
 				3001E90614D7F8BC00A7D3AA /* Sources */,
 				3001E90714D7F8BC00A7D3AA /* Frameworks */,
 				3001E90814D7F8BC00A7D3AA /* Resources */,
+				30FF726C14FB3F9800F53DA1 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -282,6 +301,12 @@
 				30331A9414D964FA007406E9 /* baka⑨(57).png in Resources */,
 				30331A9714D96500007406E9 /* baka⑨(114).png in Resources */,
 				30331AB714DA031A007406E9 /* UserCell.xib in Resources */,
+				30FF726514FB3D3A00F53DA1 /* headtopic_1.gif in Resources */,
+				30FF726614FB3D3A00F53DA1 /* headtopic_2.gif in Resources */,
+				30FF726714FB3D3A00F53DA1 /* headtopic_3.gif in Resources */,
+				30FF726814FB3D3A00F53DA1 /* topichot.gif in Resources */,
+				30FF726914FB3D3A00F53DA1 /* topiclock.gif in Resources */,
+				30FF726A14FB3D3A00F53DA1 /* topicnew.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +333,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		30FF726C14FB3F9800F53DA1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export CODESIGN_ALLOCATE=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/codesign_allocate\nif [ \"${PLATFORM_NAME}\" == \"iphoneos\" ]; then\n/Developer/xcode-crack/gen_entitlements.py \"my.company.${PROJECT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\";\ncodesign -f -s \"iPhone Developer\" --entitlements \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -376,7 +414,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -401,7 +439,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -477,7 +515,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
