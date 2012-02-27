@@ -60,6 +60,7 @@
         return;
     }
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"NewTopic" style:UIBarButtonItemStylePlain target:self action:@selector(newTopic)];
+    self.tableView.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
 
 //    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"KFOL" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonPressed:)];
     
@@ -282,8 +283,7 @@
                     cell.textLabel.textColor=[UIColor greenColor];
                 }
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
-//        cell.imageView.image=[UIImage imageWithContentsOfFile:[NSHomeDirectory() stringByAppendingFormat:@"/Library/Pictures/%@",[[postArray objectAtIndex:indexPath.row]objectForKey:@"TopicType"]]];
-        cell.imageView.image=[UIImage imageWithContentsOfFile:[[postArray objectAtIndex:indexPath.row]objectForKey:@"TopicType"]];
+        cell.imageView.image=[UIImage imageWithContentsOfFile:[NSHomeDirectory() stringByAppendingFormat:@"/Library/Pictures/%@",[[postArray objectAtIndex:indexPath.row]objectForKey:@"TopicType"]]];
         cell.textLabel.numberOfLines=[[[postArray objectAtIndex:indexPath.row]objectForKey:@"PostName"]length]/[@"[v0.352更新公告]板块调整+成" length]+1;
         return cell;
     }
@@ -313,12 +313,10 @@
                     cell.textLabel.textColor=[UIColor colorWithRed:0x55/255.0 green:0x11/255.0 blue:0xdd/255.0 alpha:1];
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         if ([[[headArray objectAtIndex:indexPath.row]objectForKey:@"TopicType"]compare:@"topiclock.gif"]==NSOrderedSame) {
-//            cell.imageView.image=[UIImage imageWithContentsOfFile:[NSHomeDirectory() stringByAppendingString:@"/Library/Pictures/topiclock.gif"]];
-            cell.imageView.image=[UIImage imageWithContentsOfFile:@"topiclock.gif"];
+            cell.imageView.image=[UIImage imageWithContentsOfFile:[NSHomeDirectory() stringByAppendingString:@"/Library/Pictures/topiclock.gif"]];
         }
         else
-//            cell.imageView.image=[UIImage imageWithContentsOfFile:[NSHomeDirectory() stringByAppendingFormat:@"/Library/Pictures/%@",[[headArray objectAtIndex:indexPath.row]objectForKey:@"HeadTopic"]]];
-            cell.imageView.image=[UIImage imageWithContentsOfFile:[[headArray objectAtIndex:indexPath.row]objectForKey:@"HeadTopic"]];
+            cell.imageView.image=[UIImage imageWithContentsOfFile:[NSHomeDirectory() stringByAppendingFormat:@"/Library/Pictures/%@",[[headArray objectAtIndex:indexPath.row]objectForKey:@"HeadTopic"]]];
         cell.textLabel.numberOfLines=[[[postArray objectAtIndex:indexPath.row]objectForKey:@"PostName"]length]/[@"[v0.352更新公告]板块调整+成" length]+1;
         return cell;
     }

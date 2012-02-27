@@ -27,10 +27,9 @@
 
 -(void)login:(id)sender
 {
-    LoginTableView *theLoginView=[[LoginTableView alloc]initWithStyle:UITableViewStyleGrouped];
+    LoginTableViewController *theLoginView=[[LoginTableViewController alloc]initWithStyle:UITableViewStyleGrouped];
     theLoginView.messageTable=messageTable;
-//    theLoginView.indexTable=self;
-    [theLoginView setIndexTable:self];
+    theLoginView.indexTable=self;
     UINavigationController *loginNav=[[UINavigationController alloc]initWithRootViewController:theLoginView];
     [self presentModalViewController:loginNav animated:YES];
 }
@@ -66,6 +65,7 @@
     NSMutableString *processingNSString=[[NSMutableString alloc]initWithData:self.index_php_html encoding:0x80000632];
     if(processingNSString.length==0)
     {
+        NSLog(@"loading page meets bug");
         return;
     }
     
@@ -80,7 +80,7 @@
         self.navigationItem.rightBarButtonItem=nil;
     }
     
-    
+    NSLog(NSHomeDirectory());
     
     self.threadParts=[[NSMutableArray alloc]init];
     NSMutableDictionary *threadDetails;

@@ -1,84 +1,42 @@
 //
-//  NewTopicViewController.m
+//  LoginTableViewController.m
 //  KFOL Lite
 //
-//  Created by 七音 姫宮 on 2/22/12.
+//  Created by 七音 姫宮 on 2/26/12.
 //  Copyright (c) 2012 CDUESTC. All rights reserved.
 //
 
-#import "NewTopicViewController.h"
+#import "LoginTableViewController.h"
 
 
-@implementation NewTopicViewController
+@implementation LoginTableViewController
 
-@synthesize threadDictionary;
+@synthesize messageTable;
+@synthesize indexTable;
 
--(void)send:(id)sender
+-(void)login
 {
-    NSString *spaceCheckString;
-    NSRange spaceCheckRange=NSMakeRange(0, 0);
-    BOOL spaceAll=NO;
+    [@"login.php" postWithStringContent:[NSString stringWithFormat:@"pwuser=%@&pwpwd=%@&step=2",usernameTextField.text,passwordTextField.text] returnResponse:nil error:nil];
+    [indexTable viewDidLoad];
+    [indexTable.tableView reloadData];
+    [messageTable viewDidLoad];
+    [messageTable.tableView reloadData];
     
-    if ([tileTextField.text lengthOfBytesUsingEncoding:0x80000632]>100) {
-        [[[UIAlertView alloc]initWithTitle:nil message:@"标题超过最大长度 100 个字节" delegate:nil cancelButtonTitle:@"返回重新操作" otherButtonTitles:nil]show];
-        return;
-    }
-    if ([tileTextField.text lengthOfBytesUsingEncoding:0x80000632]>50000) {
-        [[[UIAlertView alloc]initWithTitle:nil message:@"文章内容大于 50000 个字节" delegate:nil cancelButtonTitle:@"返回重新操作" otherButtonTitles:nil]show];
-        return;
-    }
-    
-    
-    for (int n=0; n!=2; ++n) {
-        switch (n) {
-            case 0:
-                spaceCheckString=tileTextField.text;
-                break;
-                
-            case 1:
-                spaceCheckString=contentTextView.text;
-                break;
-        }
-    
-    while (1){
-        spaceCheckRange=[spaceCheckString rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        if (spaceCheckRange.location==NSNotFound && spaceCheckString.length==0) {
-            spaceAll=YES;
-            break;
-        }
-        if (spaceCheckRange.location!=0) {
-            break;
-        }
-        spaceCheckString=[spaceCheckString substringFromIndex:spaceCheckRange.location+1];
-    }
-        
-        
-        switch (n) {
-            case 0:
-                if(spaceAll==YES ||tileTextField.text.length==0){
-                    [[[UIAlertView alloc]initWithTitle:nil message:@"标题不能为空" delegate:nil cancelButtonTitle:@"返回重新操作" otherButtonTitles:nil]show];
-                    return;
-                }
-            case 1:
-                if (spaceAll==YES || contentTextView.text.length<12) {
-                    
-                    [[[UIAlertView alloc]initWithTitle:nil message:@"文章内容少于 12 个字符" delegate:nil cancelButtonTitle:@"返回重新操作" otherButtonTitles:nil]show];
-                    return;
-                }
-        }
-     }
-    
-    
-     [@"post.php" postWithStringContent:[NSString stringWithFormat:@"atc_title=%@&atc_content=%@&step=2&action=new&fid=%@&verify=%@",tileTextField.text,contentTextView.text,[threadDictionary objectForKey:@"ThreadFID"],[threadDictionary objectForKey:@"verify"]] returnResponse:nil error:nil];
-     return;
-     
-    
-    NSLog(@"send Bug");
+    [self dismissModalViewControllerAnimated:YES];
 }
 
--(void)cancel:(id)sender
+-(void)cancel
 {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField==usernameTextField) 
+        [passwordTextField becomeFirstResponder];
+    if (textField==passwordTextField)
+        [self login];
+    return YES;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -103,22 +61,32 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title=@"New Topic";
 
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Send" style:UIBarButtonItemStylePlain target:self action:@selector(send:)];
-    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel:)];
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(login)];
+    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+    
+    usernameTextField=[[UITextField alloc]initWithFrame:CGRectMake(15, 10, [UIScreen mainScreen].bounds.size.width, 45)];
+    usernameTextField.placeholder=@"username";
+    [usernameTextField becomeFirstResponder];
+    usernameTextField.autocapitalizationType=UITextAutocapitalizationTypeNone;
+    usernameTextField.autocorrectionType=UITextAutocorrectionTypeNo;
+    usernameTextField.enablesReturnKeyAutomatically=YES;
+    usernameTextField.delegate=self;
+    usernameTextField.returnKeyType=UIReturnKeyNext;
+    
+    
+    passwordTextField=[[UITextField alloc]initWithFrame:CGRectMake(15, 10, [UIScreen mainScreen].bounds.size.width, 45)];
+    passwordTextField.placeholder=@"password";
+    passwordTextField.autocapitalizationType=UITextAutocapitalizationTypeNone;
+    passwordTextField.secureTextEntry=YES;
+    passwordTextField.delegate=self;
+    passwordTextField.returnKeyType=UIReturnKeyGo;
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    tileTextField=[[UITextField alloc]initWithFrame:CGRectMake(3, 10, [UIScreen mainScreen].bounds.size.width, 45)];
-    tileTextField.placeholder=@"Tile";
-    
-    contentTextView=[[UITextView alloc]initWithFrame:CGRectMake(0, 5, [UIScreen mainScreen].bounds.size.width, 1600)];
-    
 }
 
 - (void)viewDidUnload
@@ -155,18 +123,6 @@
 }
 
 #pragma mark - Table view data source
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    switch (indexPath.row) {
-        case 0:
-            return 45;
-            break;
-            
-        default:
-            return 1580;
-            break;
-    }
-}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -191,16 +147,12 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         switch (indexPath.row) {
             case 0:
-                [cell addSubview:tileTextField];
-                [tileTextField becomeFirstResponder];
+                [cell addSubview:usernameTextField];
                 break;
-                
-            default:
-                [cell addSubview:contentTextView];
-                break;
+            case 1:
+                [cell addSubview:passwordTextField];
         }
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
-        
     }
     
     // Configure the cell...
