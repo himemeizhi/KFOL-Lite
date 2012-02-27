@@ -1,27 +1,27 @@
 //
-//  LoginTableViewController.h
+//  LoginTableView.h
 //  KFOL Lite
 //
-//  Created by 七音 姫宮 on 2/26/12.
+//  Created by 七音 姫宮 on 2/24/12.
 //  Copyright (c) 2012 CDUESTC. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "NSString+CommunicationKF.h"
 #import "MessageTableViewController.h"
-//#import "indexTableViewController.h"
+#import "indexTableViewController.h"
 
-@interface LoginTableViewController : UITableViewController
+@interface LoginTableView : UITableViewController
 {
-    UITextField *usernameTextField,*passwordTextField;
+    UITextField *UsernameTextField,*passwordTextField;
     MessageTableViewController *messageTable;
     UITableViewController *indexTable;
 }
 
+-(id)cancel:(id)sender;
+-(id)login:(id)sender;
+
 @property(atomic,retain)MessageTableViewController *messageTable;
 @property(atomic,retain)UITableViewController *indexTable;
-
--(void)login;
--(void)cancel;
 
 @end

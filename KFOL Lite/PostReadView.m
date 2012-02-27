@@ -28,7 +28,7 @@
 {
     if (n!=max) {
         n++;
-        [heights addObject:[self stringByEvaluatingJavaScriptFromString:@"document.getElementById(\"xxx\").offsetHeight;"]];/*
+        [heights addObject:[self stringByEvaluatingJavaScriptFromString:@"document.getElementById(\"xxx\").offsetHeight;"]];
         NSLog([self stringByEvaluatingJavaScriptFromString:@"document.getElementById(\"xxx\").offsetWidth;"]);
         NSLog([self stringByEvaluatingJavaScriptFromString:@"document.getElementById(\"xxx\").clientWidth;"]);
         NSLog([self stringByEvaluatingJavaScriptFromString:@"document.getElementById(\"xxx\").scrollWidth;"]);
@@ -38,7 +38,7 @@
         NSLog([self stringByEvaluatingJavaScriptFromString:@"document.getElementById(\"xxx\").scrollHeight;"]);
         
         NSLog([self stringByEvaluatingJavaScriptFromString:@"window.screen.width;"]);
-        NSLog([self stringByEvaluatingJavaScriptFromString:@"window.screen.height;"]);*/
+        NSLog([self stringByEvaluatingJavaScriptFromString:@"window.screen.height;"]);
         if(n!=max){
             NSMutableString *postSizeCheckString=[[NSMutableString alloc]initWithString:[[posts objectAtIndex:n]objectForKey:@"PostContent"]];
             while([postSizeCheckString rangeOfString:@"if(this.width>'700')this.width='700';"].location!=NSNotFound) {
