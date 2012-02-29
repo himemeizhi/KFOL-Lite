@@ -107,6 +107,7 @@
 
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Send" style:UIBarButtonItemStylePlain target:self action:@selector(send:)];
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel:)];
+    self.tableView.allowsSelection=NO;
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -199,7 +200,7 @@
                 [cell addSubview:contentTextView];
                 break;
         }
-        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+//        cell.selectionStyle=UITableViewCellSelectionStyleNone;
         
     }
     

@@ -18,7 +18,8 @@
 -(void)logout:(id)sender
 {
     logout();
-    [self viewDidLoad];
+    [self loadHTMLContents];
+    reloadCount++;
     [self.tableView reloadData];
     [messageTable viewDidLoad];
     [messageTable.tableView reloadData];
@@ -34,32 +35,10 @@
     [self presentModalViewController:loginNav animated:YES];
 }
 
-
-- (id)initWithStyle:(UITableViewStyle)style
+-(void)loadHTMLContents
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
+    reloadCount++;
     
-    // Release any cached data, images, etc that aren't in use.
-}
-
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.navigationItem.title=@"Welcome to KFOL";
-    
-
     //load index content
     self.index_php_html=[@"index.php" getWithStringContent:nil returnResponse:nil error:nil];
     NSMutableString *processingNSString=[[NSMutableString alloc]initWithData:self.index_php_html encoding:0x80000632];
@@ -115,8 +94,8 @@
     //thread list part 2
     
     processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"px;\">"].location+5];
-//    [threadListSubarray addObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"\r\n"].location)]];
-     
+    //    [threadListSubarray addObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"\r\n"].location)]];
+    
     for(;;)
     {
         if([processingNSString rangeOfString:@"width=\"100\">"].location < [processingNSString rangeOfString:@"width=\"220\">"].location)
@@ -155,6 +134,42 @@
     [threadParts removeObjectAtIndex:0];
     
     [self.threadParts writeToFile:[NSHomeDirectory() stringByAppendingString:@"/tmp/index.plist"] atomically:YES];
+}
+
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+}
+
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.navigationItem.title=@"Welcome to KFOL";
+    if (_refreshHeaderView==nil) {
+        EGORefreshTableHeaderView *refreshTableHeaderView=[[EGORefreshTableHeaderView alloc]initWithFrame:CGRectMake(0, -self.tableView.bounds.size.height, self.tableView.frame.size.width, self.tableView.bounds.size.height)];
+        refreshTableHeaderView.delegate=self;
+        [self.tableView addSubview:refreshTableHeaderView];
+        _refreshHeaderView=refreshTableHeaderView;
+        _refreshHeaderView.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
+    }
+    [_refreshHeaderView refreshLastUpdatedDate];
+    reloadCount=-1;
+
+    [self loadHTMLContents];
     
 
     // Uncomment the following line to preserve selection between presentations.
@@ -234,12 +249,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d_%d",indexPath.section,indexPath.row];
+    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d_%d_%d",indexPath.section,indexPath.row,reloadCount];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         cell.textLabel.text=[[[threadParts objectAtIndex:indexPath.section]objectAtIndex:indexPath.row+1]objectForKey:@"ThreadName"];
         if (indexPath.section+1==threadParts.count) {
             cell.textLabel.textColor=[UIColor colorWithRed:0x55/255.0 green:0x11/255.0 blue:0xdd/255.0 alpha:1];
@@ -247,13 +262,11 @@
         {
             cell.textLabel.textColor=[UIColor redColor];
         }
-        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
-
-    }
+    
     
     // Configure the cell...
         
-    
+    }
     return cell;
 }
 
@@ -318,6 +331,67 @@
         [self.navigationController pushViewController:subController animated:YES];
     
     
+}
+
+#pragma mark -
+#pragma mark Data Source Loading / Reloading Methods
+
+- (void)reloadTableViewDataSource{
+	
+	//  should be calling your tableviews data source model to reload
+	//  put here just for demo
+	_reloading = YES;
+    [self loadHTMLContents];
+    [self.tableView reloadData];
+    [_refreshHeaderView refreshLastUpdatedDate];
+	
+}
+
+- (void)doneLoadingTableViewData{
+	
+	//  model should call this when its done loading
+	_reloading = NO;
+	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+	
+}
+
+
+#pragma mark -
+#pragma mark UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
+	
+	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+	
+	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+	
+}
+
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+	
+	[self reloadTableViewDataSource];
+	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+	
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+	
+	return _reloading; // should return if data source model is reloading
+	
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+	
+	return [NSDate date]; // should return date data source was last changed
+	
 }
 
 @end

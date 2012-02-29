@@ -8,14 +8,59 @@
 
 #import "MessageTableViewController.h"
 
-
 @implementation MessageTableViewController
 
--(id)initWithMessagebox:(NSString *)messagebox
+@synthesize isReceivebox;
+
+-(void)boxChange
 {
-    self=[self init];
-    messageboxType=messagebox;
-    return self;
+    MessageTableViewController *otherMessageTableController=[[MessageTableViewController alloc]init];
+    if(isReceivebox==YES)
+    otherMessageTableController.isReceivebox=NO;
+    else
+        otherMessageTableController.isReceivebox=YES;
+//    UINavigationController *othreNav=[[UINavigationController alloc]initWithRootViewController:otherMessageTableController];
+    [UIView transitionFromView:self.tableView toView:otherMessageTableController.tableView duration:1.0f options:UIViewAnimationOptionTransitionFlipFromLeft completion:^(BOOL done){}];
+}
+
+-(void)loadHTMLContents
+{
+    messageArray=[[NSMutableArray alloc]init];
+    NSMutableString *processingNSString;
+    if(isReceivebox==YES)
+        processingNSString=[[NSMutableString alloc]initWithData:[@"message.php?action=receivebox" getWithStringContent:nil returnResponse:nil error:nil] encoding:0x80000632];
+    else
+        processingNSString=[[NSMutableString alloc]initWithData:[@"message.php?action=sendbox" getWithStringContent:nil returnResponse:nil error:nil] encoding:0x80000632];
+    
+    if ([processingNSString rangeOfString:@"<span style=\"color:#FF0000;font-weight:bold;font-size:14px;\">您还没有登录或注册"].location!=NSNotFound) {
+        Login=NO;
+        return;
+    }
+    
+    for(;;)
+    {
+        if ([processingNSString rangeOfString:@"&mid="].location==NSNotFound) {
+            break;
+        }
+        NSMutableDictionary *messageDetails=[[NSMutableDictionary alloc]init];
+        processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"&mid="].location+5];
+        [messageDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"\""].location)] forKey:@"MessageID"];
+        processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"\">"])];
+        [messageDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</a>"].location)] forKey:@"MessageTitle"];
+        processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"&uid="])];
+        [messageDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"\""].location)] forKey:@"SenderUID"];
+        processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"\">"].location+2];
+        [messageDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</a>"].location)] forKey:@"SenderUserName"];
+        processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"&uid="])];
+        [messageDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"\""].location)] forKey:@"ReceiverUID"];
+        processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"\">"].location+2];
+        [messageDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</a>"].location)] forKey:@"ReceiverUserName"];
+        processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"<td>"].location+4];
+        [messageDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, 16)] forKey:@"MessageDate"];
+        [messageArray addObject:messageDetails];
+    }
+    [messageArray writeToFile:[NSHomeDirectory() stringByAppendingString:@"/tmp/message.xml"] atomically:YES];
+
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -40,47 +85,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (messageboxType==nil) {
-        messageboxType=[NSString stringWithString:@"receivebox"];
+    if (isReceivebox==nil) {
+        isReceivebox=YES;
     }
-    self.navigationItem.title=messageboxType;
+    self.navigationItem.title=@"Receivebox";
     Login=YES;
+    if (_refreshHeaderView==nil) {
+        EGORefreshTableHeaderView *refreshTableHeaderView=[[EGORefreshTableHeaderView alloc]initWithFrame:CGRectMake(0, -self.tableView.bounds.size.height, self.tableView.frame.size.width, self.tableView.bounds.size.height)];
+        refreshTableHeaderView.delegate=self;
+        [self.tableView addSubview:refreshTableHeaderView];
+        _refreshHeaderView=refreshTableHeaderView;
+        _refreshHeaderView.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
+    }
+    [_refreshHeaderView refreshLastUpdatedDate];
     
-    messageArray=[[NSMutableArray alloc]init];
+    
 //    MessageTableViewController *sendbox=[[MessageTableViewController alloc]initWithMessagebox:@"sendbox"];
-//    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"sendbox" style:UIBarButtonItemStylePlain target:sendbox action:<#(SEL)#>];
+    if(isReceivebox==YES)
+        self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Sendbox" style:UIBarButtonItemStylePlain target:self action:@selector(boxChange)];
+    else
+        self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Receivebox" style:UIBarButtonItemStylePlain target:self action:@selector(boxChange)];
 
-    
-    NSMutableString *processingNSString=[[NSString alloc]initWithData:[[@"message.php" stringByAppendingFormat:@"?action=%@",messageboxType] getWithStringContent:nil returnResponse:nil error:nil] encoding:0x80000632];
-    if ([processingNSString rangeOfString:@"<span style=\"color:#FF0000;font-weight:bold;font-size:14px;\">您还没有登录或注册"].location!=NSNotFound) {
-        Login=NO;
-        return;
-    }
-    
-    for(;;)
-    {
-        NSMutableDictionary *messageDetails=[[NSMutableDictionary alloc]init];
-        processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"&mid="].location+5];
-        [messageDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"\""].location)] forKey:@"MessageID"];
-        processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"\">"])];
-        [messageDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</a>"].location)] forKey:@"MessageTitle"];
-        processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"&uid="])];
-        [messageDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"\""].location)] forKey:@"SenderUID"];
-        processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"\">"].location+2];
-        [messageDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</a>"].location)] forKey:@"SenderUserName"];
-        processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"&uid="])];
-        [messageDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"\""].location)] forKey:@"ReceiverUID"];
-        processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"\">"].location+2];
-        [messageDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</a>"].location)] forKey:@"ReceiverUserName"];
-        processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"<td>"].location+4];
-        [messageDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, 16)] forKey:@"MessageDate"];
-        [messageArray addObject:messageDetails];
-        if ([processingNSString rangeOfString:@"&mid="].location==NSNotFound) {
-            break;
-        }
-    }
-    [messageArray writeToFile:[NSHomeDirectory() stringByAppendingString:@"/tmp/message.xml"] atomically:YES];
-    // Uncomment the following line to preserve selection between presentations.
+    [self loadHTMLContents];
+        // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
@@ -206,6 +233,66 @@
      */
     subController=[[MessageReadTableViewController alloc]initWithMessageDictionary:[messageArray objectAtIndex:indexPath.row]];
     [self.navigationController pushViewController:subController animated:YES];
+}
+
+#pragma mark -
+#pragma mark Data Source Loading / Reloading Methods
+
+- (void)reloadTableViewDataSource{
+	
+	//  should be calling your tableviews data source model to reload
+	//  put here just for demo
+    [self viewDidLoad];
+    [self.tableView reloadData];
+	_reloading = YES;
+	
+}
+
+- (void)doneLoadingTableViewData{
+	
+	//  model should call this when its done loading
+	_reloading = NO;
+	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+	
+}
+
+
+#pragma mark -
+#pragma mark UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
+	
+	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+	
+	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+	
+}
+
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+	
+	[self reloadTableViewDataSource];
+	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+	
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+	
+	return _reloading; // should return if data source model is reloading
+	
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+	
+	return [NSDate date]; // should return date data source was last changed
+	
 }
 
 @end

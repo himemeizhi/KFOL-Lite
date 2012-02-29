@@ -10,6 +10,7 @@
 #import "NSString+CommunicationKF.h"
 #import "ReplyViewController.h"
 #import "PostReadView.h"
+#import "EGORefreshTableHeaderView.h"
 
 @interface PostTableViewController : UITableViewController
 {
@@ -20,12 +21,20 @@
     NSInteger loadCount;
     UIWebView *webview;
     NSString *threadFID;
+    int reloadCount;
+    
+    EGORefreshTableHeaderView *_refreshHeaderView;
+    BOOL _reloading;
 }
 
 @property(atomic,retain)NSString *threadFID;
 @property(atomic)NSInteger loadCount;
 
 -(id)initWithPostDictionary:(NSDictionary *) PostDetail;
--(void)newPost;
+-(void)newPost; 
+-(void)loadHTMLContents;
+
+-(void)reloadTableViewDataSource;
+-(void)doneLoadingTableViewData;
 
 @end

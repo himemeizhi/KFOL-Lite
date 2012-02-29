@@ -64,6 +64,7 @@
 
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(login)];
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+    self.tableView.allowsSelection=NO;
     
     usernameTextField=[[UITextField alloc]initWithFrame:CGRectMake(15, 10, [UIScreen mainScreen].bounds.size.width, 45)];
     usernameTextField.placeholder=@"username";
@@ -152,7 +153,7 @@
             case 1:
                 [cell addSubview:passwordTextField];
         }
-        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+//        cell.selectionStyle=UITableViewCellSelectionStyleNone;
     }
     
     // Configure the cell...

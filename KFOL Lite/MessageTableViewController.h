@@ -9,16 +9,25 @@
 #import <UIKit/UIKit.h>
 #import "NSString+CommunicationKF.h"
 #import "MessageReadTableViewController.h"
+#import "EGORefreshTableHeaderView.h"
 
 @interface MessageTableViewController : UITableViewController
 {
     NSData *message_php_html;
     NSMutableArray *messageArray;
-    NSString *messageboxType;
     MessageReadTableViewController *subController;
-    BOOL Login;
+    BOOL Login,isReceivebox;
+    
+    EGORefreshTableHeaderView *_refreshHeaderView;
+    BOOL _reloading;
 }
 
--(id)initWithMessagebox:(NSString *)messagebox;
+-(void)boxChange;
+-(void)loadHTMLContents;
+
+-(void)reloadTableViewDataSource;
+-(void)doneLoadingTableViewData;
+
+@property(atomic)BOOL isReceivebox;
 
 @end

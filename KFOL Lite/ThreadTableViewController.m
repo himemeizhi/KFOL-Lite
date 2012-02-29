@@ -16,6 +16,7 @@
     self=[self init];
     theThread=ThreadDetail;
     self.title=[theThread objectForKey:@"ThreadName"];
+    reloadCount=-1;
     return self;
 }
 
@@ -28,41 +29,9 @@
     [self presentModalViewController:subNav animated:YES];
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
+-(void)loadHTMLContents
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    if (self.navigationItem.backBarButtonItem==nil) {
-        NSLog(@"leftbarbuttom=nil");
-    }
-    self.navigationItem.backBarButtonItem.title=@"KFOL";
-    if (([[theThread objectForKey:@"ThreadFID"]compare:@"9"]==NSOrderedSame)|| ([[theThread objectForKey:@"ThreadFID"]compare:@"98"]==NSOrderedSame)) {
-        UIAlertView *Aler=[[UIAlertView alloc]initWithTitle:@">A<" message:@"这个板块施工中⋯⋯" delegate:nil cancelButtonTitle:@"所以暂时不能看⋯⋯" otherButtonTitles: nil];
-        [Aler show];
-        return;
-    }
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"NewTopic" style:UIBarButtonItemStylePlain target:self action:@selector(newTopic)];
-    self.tableView.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
-
-//    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"KFOL" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonPressed:)];
+    reloadCount++;
     
     thread_php_html=[[@"thread.php?fid=" stringByAppendingString:[theThread objectForKey:@"ThreadFID"]] getWithStringContent:nil returnResponse:nil error:nil];
     NSMutableString *processingNSString=[[NSMutableString alloc]initWithData:thread_php_html encoding:0x80000632];
@@ -122,8 +91,8 @@
         {
             [postProperties setObject:@"Bold" forKey:@"Bold"];
             processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@">"].location+1];
-//            processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"red>"].location+4];
-//            [postProperties setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</font>"].location)] forKey:@"PostName"];
+            //            processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"red>"].location+4];
+            //            [postProperties setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</font>"].location)] forKey:@"PostName"];
         }
         if([processingNSString rangeOfString:@"<font"].location < [processingNSString rangeOfString:@"</a>"].location)
         {
@@ -131,7 +100,7 @@
             [postProperties setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@">"].location)] forKey:@"PostColor"];
             processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@">"].location+1];
         }
-        [postProperties setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</"].location)] forKey:@"PostName"];
+        [postProperties setObject:[[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</"].location)]stringByDecodingHTMLEntities] forKey:@"PostName"];
         
         processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"<td><a href=\"profile.php?action=show&uid="])];
         [postProperties setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"\">"].location)] forKey:@"UserID"];
@@ -142,22 +111,66 @@
         processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"<td>"].location+4];
         [postProperties setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</td>"].location)] forKey:@"Reposts"];
         processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"<td>"].location+4];
-        [postProperties setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</td>"].location)] forKey:@"PageViews"];/*
-        processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"<a href=\""].location+9];
-        [postProperties setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"\">"].location)] forKey:@"LastRepostURL"];*/        
+        [postProperties setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</td>"].location)] forKey:@"PageViews"];
+        /*processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"<a href=\""].location+9];
+         [postProperties setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"\">"].location)] forKey:@"LastRepostURL"];*/        
         processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"\"> "].location+3];
         [postProperties setObject:[processingNSString substringWithRange:NSMakeRange(0, 16)] forKey:@"LastRepostDate"];
         processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"by: "].location+4];
         [postProperties setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</td>"].location)] forKey:@"LastRepostUserName"];
         
-//        [postProperties setObject:[theThread objectForKey:@"ThreadFID"] forKey:@"ThreadFID"];
-//        [postArray addObject:postProperties];
+        //        [postProperties setObject:[theThread objectForKey:@"ThreadFID"] forKey:@"ThreadFID"];
+        //        [postArray addObject:postProperties];
     }
     if (headArray.count!=0) {
         [ThreadPHP addObject:headArray];
     }
     [ThreadPHP addObject:postArray];
     [ThreadPHP writeToFile:[NSHomeDirectory() stringByAppendingString:@"/tmp/thread.plist"] atomically:YES];
+}
+
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+}
+
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+//    self.navigationItem.backBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"KFOL" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    if (([[theThread objectForKey:@"ThreadFID"]compare:@"9"]==NSOrderedSame)|| ([[theThread objectForKey:@"ThreadFID"]compare:@"98"]==NSOrderedSame)) {
+        UIAlertView *Aler=[[UIAlertView alloc]initWithTitle:@">A<" message:@"这个板块施工中⋯⋯" delegate:nil cancelButtonTitle:@"所以暂时不能看⋯⋯" otherButtonTitles: nil];
+        [Aler show];
+        return;
+    }
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"NewTopic" style:UIBarButtonItemStylePlain target:self action:@selector(newTopic)];
+    self.tableView.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
+    if (_refreshHeaderView==nil) {
+        EGORefreshTableHeaderView *refreshTableHeaderView=[[EGORefreshTableHeaderView alloc]initWithFrame:CGRectMake(0, -self.tableView.bounds.size.height, self.tableView.frame.size.width, self.tableView.bounds.size.height)];
+        refreshTableHeaderView.delegate=self;
+        [self.tableView addSubview:refreshTableHeaderView];
+        _refreshHeaderView=refreshTableHeaderView;
+        _refreshHeaderView.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
+    }
+    [_refreshHeaderView refreshLastUpdatedDate];
+
+//    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"KFOL" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonPressed:)];
+    
+    [self loadHTMLContents];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -206,7 +219,7 @@
     if (subThreadDetails!=nil && indexPath.section==0) {
         return self.tableView.rowHeight;
     }
-    return self.tableView.rowHeight+[[[[ThreadPHP objectAtIndex:indexPath.section]objectAtIndex:indexPath.row]objectForKey:@"PostName"]sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]].height * ([[[[ThreadPHP objectAtIndex:indexPath.section]objectAtIndex:indexPath.row]objectForKey:@"PostName"]length]/[@"[v0.352更新公告]板块调整+成" length]+1);
+    return self.tableView.rowHeight+[[[[ThreadPHP objectAtIndex:indexPath.section]objectAtIndex:indexPath.row]objectForKey:@"PostName"]sizeWithFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]].height * ([[[[ThreadPHP objectAtIndex:indexPath.section]objectAtIndex:indexPath.row]objectForKey:@"PostName"]lengthOfBytesUsingEncoding:0x80000632]/[@"[v0.352更新公告]板块调整+成" lengthOfBytesUsingEncoding:0x80000632]+1);
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -255,7 +268,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d_%d",indexPath.section,indexPath.row];
+    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d_%d_%d",indexPath.section,indexPath.row,reloadCount];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -268,7 +281,7 @@
         if ([[postArray objectAtIndex:indexPath.row]objectForKey:@"Bold"]!=nil) {
             cell.textLabel.font=[UIFont boldSystemFontOfSize:[UIFont labelFontSize]];
         }
-        cell.textLabel.lineBreakMode=UILineBreakModeClip;
+        cell.textLabel.lineBreakMode=UILineBreakModeCharacterWrap;
         cell.detailTextLabel.text=[[[postArray objectAtIndex:indexPath.row]objectForKey:@"UserName"]stringByAppendingFormat:@"｜%@｜%@/%@",[[postArray objectAtIndex:indexPath.row]objectForKey:@"PostDate"],[[postArray objectAtIndex:indexPath.row]objectForKey:@"Reposts"],[[postArray objectAtIndex:indexPath.row]objectForKey:@"PageViews"]];
         if ([[postArray objectAtIndex:indexPath.row]objectForKey:@"PostColor"]==nil) {
             cell.textLabel.textColor=[UIColor colorWithRed:0x55/255.0 green:0x11/255.0 blue:0xdd/255.0 alpha:1];
@@ -283,8 +296,8 @@
                     cell.textLabel.textColor=[UIColor greenColor];
                 }
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
-        cell.imageView.image=[UIImage imageWithContentsOfFile:[NSHomeDirectory() stringByAppendingFormat:@"/Library/Pictures/%@",[[postArray objectAtIndex:indexPath.row]objectForKey:@"TopicType"]]];
-        cell.textLabel.numberOfLines=[[[postArray objectAtIndex:indexPath.row]objectForKey:@"PostName"]length]/[@"[v0.352更新公告]板块调整+成" length]+1;
+        cell.imageView.image=[UIImage imageNamed:[[postArray objectAtIndex:indexPath.row]objectForKey:@"TopicType"]];
+        cell.textLabel.numberOfLines=[[[postArray objectAtIndex:indexPath.row]objectForKey:@"PostName"]lengthOfBytesUsingEncoding:0x80000632]/[@"[v0.352更新公告]板块调整+成" lengthOfBytesUsingEncoding:0x80000632]+1;
         return cell;
     }
     
@@ -313,11 +326,11 @@
                     cell.textLabel.textColor=[UIColor colorWithRed:0x55/255.0 green:0x11/255.0 blue:0xdd/255.0 alpha:1];
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         if ([[[headArray objectAtIndex:indexPath.row]objectForKey:@"TopicType"]compare:@"topiclock.gif"]==NSOrderedSame) {
-            cell.imageView.image=[UIImage imageWithContentsOfFile:[NSHomeDirectory() stringByAppendingString:@"/Library/Pictures/topiclock.gif"]];
+            cell.imageView.image=[UIImage imageNamed:@"topiclock.gif"];
         }
         else
-            cell.imageView.image=[UIImage imageWithContentsOfFile:[NSHomeDirectory() stringByAppendingFormat:@"/Library/Pictures/%@",[[headArray objectAtIndex:indexPath.row]objectForKey:@"HeadTopic"]]];
-        cell.textLabel.numberOfLines=[[[postArray objectAtIndex:indexPath.row]objectForKey:@"PostName"]length]/[@"[v0.352更新公告]板块调整+成" length]+1;
+            cell.imageView.image=[UIImage imageNamed:[[headArray objectAtIndex:indexPath.row]objectForKey:@"HeadTopic"]];
+        cell.textLabel.numberOfLines=[[[postArray objectAtIndex:indexPath.row]objectForKey:@"PostName"]lengthOfBytesUsingEncoding:0x80000632]/[@"[v0.352更新公告]板块调整+成" lengthOfBytesUsingEncoding:0x80000632]+1;
         return cell;
     }
         
@@ -394,6 +407,67 @@
     }
     [self.navigationController pushViewController:subController animated:YES];
     
+}
+
+#pragma mark -
+#pragma mark Data Source Loading / Reloading Methods
+
+- (void)reloadTableViewDataSource{
+	
+	//  should be calling your tableviews data source model to reload
+	//  put here just for demo
+    [self loadHTMLContents];
+    [self.tableView reloadData];
+    [_refreshHeaderView refreshLastUpdatedDate];
+	_reloading = YES;
+	
+}
+
+- (void)doneLoadingTableViewData{
+	
+	//  model should call this when its done loading
+	_reloading = NO;
+	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+	
+}
+
+
+#pragma mark -
+#pragma mark UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
+	
+	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+	
+	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+	
+}
+
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+	
+	[self reloadTableViewDataSource];
+	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+	
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+	
+	return _reloading; // should return if data source model is reloading
+	
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+	
+	return [NSDate date]; // should return date data source was last changed
+	
 }
 
 @end

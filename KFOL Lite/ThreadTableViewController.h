@@ -10,6 +10,8 @@
 #import "PostTableViewController.h"
 #import "NSString+CommunicationKF.h"
 #import "NewTopicViewController.h"
+#import "EGORefreshTableHeaderView.h"
+#import "NSString+HTML.h"
 
 @interface ThreadTableViewController : UITableViewController
 {
@@ -17,11 +19,18 @@
     NSMutableDictionary *subThreadDetails;
     NSData *thread_php_html;
     NSMutableArray *postArray,*headArray,*ThreadPHP;
-    PostTableViewController *subController;    
+    PostTableViewController *subController;
+    int reloadCount;
     
+    EGORefreshTableHeaderView *_refreshHeaderView;
+    BOOL _reloading;
 }
 
 -(id)initWithThreadDictionary:(NSDictionary *)ThreadDetail;
 -(void)newTopic;
+-(void)loadHTMLContents;
+
+-(void)reloadTableViewDataSource;
+-(void)doneLoadingTableViewData;
 
 @end

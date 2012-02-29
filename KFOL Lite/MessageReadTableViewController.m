@@ -51,6 +51,7 @@
 {
     [super loadView];
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(replayMessage:)];
+    self.tableView.allowsSelection=NO;
     
     NSMutableString *processingNSString=[[NSMutableString alloc]initWithData:[[@"message.php?action=read&mid=" stringByAppendingString:[theMessage objectForKey:@"MessageID"]]getWithStringContent:nil returnResponse:nil error:nil] encoding:0x80000632];
     messageDictionary=[[NSMutableDictionary alloc]initWithDictionary:theMessage];
@@ -204,8 +205,8 @@
 //            [(UIWebView *)[cell viewWithTag:10]setFrame:<#(CGRect)#>
 //            [(UIWebView *)[cell viewWithTag:10] scrollView].scrollEnabled=NO;
             break;
-    }
-        cell.selectionStyle=UITableViewCellSelectionStyleNone;}
+    }}
+//        cell.selectionStyle=UITableViewCellSelectionStyleNone;}
         return cell;
 }
 

@@ -11,19 +11,24 @@
 #import "NSString+CommunicationKF.h"
 #import "MessageTableViewController.h"
 #import "LoginTableViewController.h"
+#import "EGORefreshTableHeaderView.h"
 
-@interface indexTableViewController : UITableViewController
+@interface indexTableViewController : UITableViewController<EGORefreshTableHeaderDelegate>
 {
     NSMutableArray *ThreadList;
     ThreadTableViewController *subController;
     MessageTableViewController *messageTable;
+    int reloadCount;
     
-    int sections;
-    int groups;
+    EGORefreshTableHeaderView *_refreshHeaderView;
+    BOOL _reloading;
 }
 
 -(void)logout:(id)sender;
 -(void)login:(id)sender;
+-(void)reloadTableViewDataSource;
+-(void)doneLoadingTableViewData;
+-(void)loadHTMLContents;
 
 @property(atomic,retain)NSData *index_php_html;
 @property(atomic,retain)NSMutableArray *threadParts;
