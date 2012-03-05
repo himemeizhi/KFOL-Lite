@@ -47,7 +47,7 @@
         [self loadHTMLString:[[@"<div id='xxx'>" stringByAppendingString:postSizeCheckString]stringByAppendingString:@"</div>"] baseURL:[NSURL URLWithString:@"http://bbs.9gal.com"]];
         }
     }
-    if (n==max) {NSLog(@"reloading");
+    if (n==max) {
         (*loadC)++;
 //        [tableViewToReload reloadData];
         [tableViewToReload reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationFade];

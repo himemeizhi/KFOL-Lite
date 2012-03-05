@@ -11,6 +11,8 @@
 
 @implementation MessageReadTableViewController
 
+@synthesize isReceivebox;
+
 -(id)initWithMessageDictionary:(NSDictionary *)MessageDetail
 {
     self=[self init];
@@ -53,11 +55,17 @@
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(replayMessage:)];
     self.tableView.allowsSelection=NO;
     
-    NSMutableString *processingNSString=[[NSMutableString alloc]initWithData:[[@"message.php?action=read&mid=" stringByAppendingString:[theMessage objectForKey:@"MessageID"]]getWithStringContent:nil returnResponse:nil error:nil] encoding:0x80000632];
+    NSMutableString *processingNSString=[[NSMutableString alloc]initWithData:[[@"message.php?action=readscout&mid=" stringByAppendingString:[theMessage objectForKey:@"MessageID"]]getWithStringContent:nil returnResponse:nil error:nil] encoding:0x80000632];
     messageDictionary=[[NSMutableDictionary alloc]initWithDictionary:theMessage];
+    if ([processingNSString rangeOfString:@"您的操作因为以下原因无法继续"].location!=NSNotFound) {
+        [messageDictionary setObject:@"<div style=\"padding:0px 0px 15px 50px; line-height:150;\">         <span style=\"color:#FF0000;font-weight:bold;font-size:14px;\">该信息已被删除</span></div>" forKey:@"MessageContent"];
+        return;
+    }
     processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"<td style=\""].location];
+    
     processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@">"].location+1];
     [messageDictionary setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</td>"].location)] forKey:@"MessageContent"];
+    NSLog(messageDictionary.description);
 }
 
 

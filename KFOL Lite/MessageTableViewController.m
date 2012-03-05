@@ -11,16 +11,54 @@
 @implementation MessageTableViewController
 
 @synthesize isReceivebox;
+@synthesize receivebox;
+@synthesize sentbox;
+/*
+-(id)init
+{
+    self=[super init];
+    
+    
+    return self;
+}*/
+
+-(id)initWithReceiveBox:(BOOL)isRBox
+{
+    self=[self init];
+    if (isRBox==YES) {
+        isReceivebox=YES;
+    }
+    else{
+        isReceivebox=NO;
+//        ((UIScrollView *)self.tableView.superview).contentInset=UIEdgeInsetsMake(-10, 0, 0, 0);
+    }
+    
+    Login=YES;
+    if (_refreshHeaderView==nil) {
+        EGORefreshTableHeaderView *refreshTableHeaderView=[[EGORefreshTableHeaderView alloc]initWithFrame:CGRectMake(0, -self.tableView.bounds.size.height, self.tableView.frame.size.width, self.tableView.bounds.size.height)];
+        refreshTableHeaderView.delegate=self;
+        [self.tableView addSubview:refreshTableHeaderView];
+        _refreshHeaderView=refreshTableHeaderView;
+    }
+    [_refreshHeaderView refreshLastUpdatedDate];
+    
+    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Sentbox" style:UIBarButtonItemStylePlain target:self action:@selector(boxChange)];
+    
+    return self;
+}
 
 -(void)boxChange
 {
-    MessageTableViewController *otherMessageTableController=[[MessageTableViewController alloc]init];
-    if(isReceivebox==YES)
-    otherMessageTableController.isReceivebox=NO;
+    /*
+    [UIView transitionFromView:isReceivebox?receivebox.tableView:sentbox.tableView toView:isReceivebox?sentbox.tableView:receivebox.tableView duration:1.0f options:isReceivebox?UIViewAnimationOptionTransitionFlipFromLeft:UIViewAnimationOptionTransitionFlipFromRight completion:^(BOOL done){}];*/
+    if (isReceivebox==YES) {
+        isReceivebox=NO;
+    }
     else
-        otherMessageTableController.isReceivebox=YES;
-//    UINavigationController *othreNav=[[UINavigationController alloc]initWithRootViewController:otherMessageTableController];
-    [UIView transitionFromView:self.tableView toView:otherMessageTableController.tableView duration:1.0f options:UIViewAnimationOptionTransitionFlipFromLeft completion:^(BOOL done){}];
+        isReceivebox=YES;
+    
+    [self viewDidLoad];
+    [self.tableView reloadData];
 }
 
 -(void)loadHTMLContents
@@ -30,7 +68,7 @@
     if(isReceivebox==YES)
         processingNSString=[[NSMutableString alloc]initWithData:[@"message.php?action=receivebox" getWithStringContent:nil returnResponse:nil error:nil] encoding:0x80000632];
     else
-        processingNSString=[[NSMutableString alloc]initWithData:[@"message.php?action=sendbox" getWithStringContent:nil returnResponse:nil error:nil] encoding:0x80000632];
+        processingNSString=[[NSMutableString alloc]initWithData:[@"message.php?action=scout" getWithStringContent:nil returnResponse:nil error:nil] encoding:0x80000632];
     
     if ([processingNSString rangeOfString:@"<span style=\"color:#FF0000;font-weight:bold;font-size:14px;\">您还没有登录或注册"].location!=NSNotFound) {
         Login=NO;
@@ -85,26 +123,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (isReceivebox==nil) {
-        isReceivebox=YES;
-    }
-    self.navigationItem.title=@"Receivebox";
-    Login=YES;
-    if (_refreshHeaderView==nil) {
-        EGORefreshTableHeaderView *refreshTableHeaderView=[[EGORefreshTableHeaderView alloc]initWithFrame:CGRectMake(0, -self.tableView.bounds.size.height, self.tableView.frame.size.width, self.tableView.bounds.size.height)];
-        refreshTableHeaderView.delegate=self;
-        [self.tableView addSubview:refreshTableHeaderView];
-        _refreshHeaderView=refreshTableHeaderView;
-        _refreshHeaderView.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
-    }
-    [_refreshHeaderView refreshLastUpdatedDate];
     
-    
-//    MessageTableViewController *sendbox=[[MessageTableViewController alloc]initWithMessagebox:@"sendbox"];
-    if(isReceivebox==YES)
-        self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Sendbox" style:UIBarButtonItemStylePlain target:self action:@selector(boxChange)];
-    else
-        self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Receivebox" style:UIBarButtonItemStylePlain target:self action:@selector(boxChange)];
+    if(isReceivebox==YES){
+        self.navigationItem.title=@"Receivebox";
+    self.navigationItem.leftBarButtonItem.title=@"Sentbox";
+    }
+    if(isReceivebox==NO){
+        self.navigationItem.title=@"Sentbox";
+    self.navigationItem.leftBarButtonItem.title=@"Receivebox";
+    }
 
     [self loadHTMLContents];
         // Uncomment the following line to preserve selection between presentations.
@@ -166,7 +193,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d",indexPath.row];
+    NSString *CellIdentifier;
+    if (isReceivebox) {
+        CellIdentifier = [NSString stringWithFormat:@"Cell%d_1",indexPath.row];
+    }
+    else
+        CellIdentifier = [NSString stringWithFormat:@"Cell%d_0",indexPath.row];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil && Login==YES) {
@@ -232,6 +264,7 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
     subController=[[MessageReadTableViewController alloc]initWithMessageDictionary:[messageArray objectAtIndex:indexPath.row]];
+    subController.isReceivebox=isReceivebox;
     [self.navigationController pushViewController:subController animated:YES];
 }
 

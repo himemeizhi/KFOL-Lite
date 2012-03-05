@@ -17,6 +17,7 @@
     NSMutableArray *messageArray;
     MessageReadTableViewController *subController;
     BOOL Login,isReceivebox;
+    MessageTableViewController *receivebox,*sentbox;
     
     EGORefreshTableHeaderView *_refreshHeaderView;
     BOOL _reloading;
@@ -24,10 +25,14 @@
 
 -(void)boxChange;
 -(void)loadHTMLContents;
+-(id)initWithReceiveBox:(BOOL)isRBox;
+
 
 -(void)reloadTableViewDataSource;
 -(void)doneLoadingTableViewData;
 
 @property(atomic)BOOL isReceivebox;
+@property(atomic,retain)MessageTableViewController *receivebox;
+@property(atomic,retain)MessageTableViewController *sentbox;
 
 @end

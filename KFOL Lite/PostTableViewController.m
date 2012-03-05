@@ -20,18 +20,34 @@
     thePost=PostDetail;
     self.title=[thePost objectForKey:@"PostName"];
     reloadCount=-1;
+    URLString=[[NSMutableString alloc]initWithFormat:@"read.php?tid=%@",[thePost objectForKey:@"TopicID"]];
     return self;
 }
 
 -(void)loadHTMLContents
 {
-    reloadCount++;
     loadCount=0;
     
-    post_php_html=[[NSString stringWithFormat:@"read.php?tid=%@",[thePost objectForKey:@"TopicID"]] getWithStringContent:nil returnResponse:nil error:nil];
+    post_php_html=[URLString getWithStringContent:nil returnResponse:nil error:nil];
     NSMutableString *processingNSString=[[NSMutableString alloc]initWithData:post_php_html encoding:0x80000632];
     NSMutableDictionary *postDetails;
-    postArray=[[NSMutableArray alloc]init];
+    
+    
+    if ([processingNSString rangeOfString:@">首页</a>"].location!=NSNotFound) {
+        pagesInfo=[[NSMutableDictionary alloc]init];            
+        processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"<b> "])];
+        [pagesInfo setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@" </b>"].location)] forKey:@"PageNow"];
+        processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"\">"].location+2];
+        [pagesInfo setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</a>"].location)] forKey:@"PageNext"];
+        if ([[pagesInfo objectForKey:@"PageNext"]compare:@"后10页"]==NSOrderedSame) {
+            [pagesInfo removeObjectForKey:@"PageNext"];
+        }
+        processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"页码: ( "])];
+        processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"/"].location+1];
+        [pagesInfo setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@" )"].location)] forKey:@"PageMax"];
+    }
+    
+    
     for(;;)
     {
         postDetails=[[NSMutableDictionary alloc]init];
@@ -106,7 +122,6 @@
     
     [postArray writeToFile:[NSHomeDirectory() stringByAppendingString:@"/tmp/post.plist"] atomically:YES];
     
-    
     HeightwebView.posts=postArray;
     HeightwebView.max=postArray.count;
     HeightwebView.n=0;
@@ -163,17 +178,28 @@
         refreshTableHeaderView.delegate=self;
         [self.tableView addSubview:refreshTableHeaderView];
         _refreshHeaderView=refreshTableHeaderView;
-        _refreshHeaderView.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
     }
     [_refreshHeaderView refreshLastUpdatedDate];
+    
 
     HeightwebView=[[PostReadView alloc]initWithFrame:CGRectMake(0, 0, 300, 0)];
     HeightwebView.delegate=HeightwebView;
     HeightwebView.loadC=&loadCount;
     HeightwebView.tableViewToReload=self.tableView;
+    postArray=[[NSMutableArray alloc]init];
     
     [self loadHTMLContents];
     
+    
+    if (pagesInfo!=nil && [[pagesInfo objectForKey:@"PageNow"] intValue]<[[pagesInfo objectForKey:@"PageMax"] intValue]) {
+        if (_addMoreFooterView==nil) {
+        EGORefreshTableHeaderView *addMoreTableFooterView=[[EGORefreshTableHeaderView alloc]initWithFrameInBottom:CGRectMake(0, -460, 0, 0)];
+        addMoreTableFooterView.delegate=self;
+        [self.tableView addSubview:addMoreTableFooterView];
+        _addMoreFooterView=addMoreTableFooterView;
+    }
+    [_addMoreFooterView refreshLastUpdatedDate];
+    }
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -267,8 +293,8 @@
             [(UILabel *)[cell viewWithTag:103]setText:[[postArray objectAtIndex:indexPath.row/2]objectForKey:@"PostDate"]];
             [(UILabel *)[cell viewWithTag:103]setTextColor:[UIColor colorWithRed:0x55/255.0 green:0x11/255.0 blue:0xdd/255.0 alpha:1]];
             if([[postArray objectAtIndex:indexPath.row/2]objectForKey:@"UserImg"]!=nil){
-            [(UIWebView *)[cell viewWithTag:104]loadHTMLString:[[@"<img src=\"" stringByAppendingString:[[postArray objectAtIndex:indexPath.row/2]objectForKey:@"UserImg"]]stringByAppendingString:@"\" border=\"0\" onload=\"if(this.width>'50')this.width='50';\" />"] baseURL:[NSURL URLWithString:@"http://bbs.9gal.com/"]];
-                ((UIWebView *)[cell viewWithTag:104]).scrollView.contentInset=UIEdgeInsetsMake(-7.5f, -7.5f, 0, 0);
+            [(UIWebView *)[cell viewWithTag:104]loadHTMLString:[[@"<img src=\"" stringByAppendingString:[[postArray objectAtIndex:indexPath.row/2]objectForKey:@"UserImg"]]stringByAppendingString:@"\" border=\"0\" onload=\"if(this.height>'50')this.height='50';\" />"] baseURL:[NSURL URLWithString:@"http://bbs.9gal.com/"]];
+                ((UIWebView *)[cell viewWithTag:104]).scrollView.contentInset=UIEdgeInsetsMake(-7.5f, -7.5f, 7.5f, 15);
                 ((UIWebView *)[cell viewWithTag:104]).scrollView.scrollEnabled=NO;
 //            [(UIImageView *)[cell viewWithTag:104]initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[@"http://bbs.9gal.com/" stringByAppendingString:[[postArray objectAtIndex:indexPath.row/2]objectForKey:@"UserImg"]]]]]];
             }
@@ -302,11 +328,15 @@
                     webview.scrollView.scrollEnabled=NO;
                     webview.dataDetectorTypes=UIDataDetectorTypeNone;
                     webview.dataDetectorTypes=UIDataDetectorTypeLink;
+                    if (postArray.count*2==indexPath.row+1) {
+                        [_addMoreFooterView setFrame:CGRectMake(0, self.tableView.contentSize.height+65, self.tableView.frame.size.width, 65)];
+                    }
                     break;
             }
     }
 //    cell.selectionStyle=UITableViewCellSelectionStyleNone;
     }
+    
     return cell;
 }
 
@@ -368,6 +398,10 @@
 	
 	//  should be calling your tableviews data source model to reload
 	//  put here just for demo
+    postArray=nil;
+    postArray=[[NSMutableArray alloc]init];
+    [URLString setString:[NSString stringWithFormat:@"read.php?tid=%@",[thePost objectForKey:@"TopicID"]]];
+    reloadCount++;
     [self loadHTMLContents];
     [self.tableView reloadData];
     [_refreshHeaderView refreshLastUpdatedDate];
@@ -383,6 +417,37 @@
 	
 }
 
+#pragma mark -
+#pragma mark Data Source Adding Methods
+
+- (void)addMoreTablewViewDataSourece{
+	
+	//  should be calling your tableviews data source model to reload
+	//  put here just for demo
+    
+    [URLString setString:[NSString stringWithFormat:@"read.php?tid=%@&page=%@",[thePost objectForKey:@"TopicID"],[pagesInfo objectForKey:@"PageNext"]]];
+    [self loadHTMLContents];
+    [self.tableView reloadData];
+    [_addMoreFooterView refreshLastUpdatedDate];
+	_adding = YES;
+	
+}
+
+- (void)doneAddMoreTableViewData{
+	
+	//  model should call this when its done loading
+	_adding = NO;
+    if([pagesInfo objectForKey:@"PageNext"]==nil){
+        [_addMoreFooterView removeFromSuperview];
+        _addMoreFooterView=nil;
+    }
+    else{
+        NSValue *theFrame=[NSValue valueWithCGRect:CGRectMake(0, self.tableView.contentSize.height+65, self.tableView.frame.size.width, 65)];
+        [_addMoreFooterView performSelector:@selector(setFrame:) withObject:theFrame afterDelay:3];
+    }
+	[_addMoreFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+	
+}
 
 #pragma mark -
 #pragma mark UIScrollViewDelegate Methods
@@ -390,12 +455,16 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
 	
 	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    if(loadCount!=0 && [pagesInfo objectForKey:@"PageNext"]!=nil)
+    [_addMoreFooterView egoRefreshScrollViewDidScroll:scrollView];
     
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
 	
 	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    if(loadCount!=0 && [pagesInfo objectForKey:@"PageNext"]!=nil)
+    [_addMoreFooterView egoRefreshScrollViewDidEndDragging:scrollView];
 	
 }
 
@@ -406,7 +475,7 @@
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
 	
 	[self reloadTableViewDataSource];
-	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0.0];
 	
 }
 
@@ -422,4 +491,25 @@
 	
 }
 
+#pragma mark -
+#pragma mark EGOAddMoreTableFooterDelegate Methods
+
+- (void)egoAddMoreTableFooterDidTriggerAddMore:(EGORefreshTableHeaderView*)view{
+	
+	[self addMoreTablewViewDataSourece];
+	[self performSelector:@selector(doneAddMoreTableViewData) withObject:nil afterDelay:0.0];
+	
+}
+
+- (BOOL)egoAddMoreTableFooterDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+	
+	return _adding; // should return if data source model is reloading
+	
+}
+
+- (NSDate*)egoAddMoreTableFooterDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+	
+	return [NSDate date]; // should return date data source was last changed
+	
+}
 @end

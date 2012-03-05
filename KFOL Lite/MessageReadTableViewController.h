@@ -17,9 +17,12 @@
     NSMutableDictionary *messageDictionary;
     NSInteger messageHeight;
     ReadView *readWebView;
+    BOOL isReceivebox;
 }
 
 -(id)initWithMessageDictionary:(NSDictionary *)MessageDetail;
 -(void)replayMessage:(id)sender;
+
+@property(atomic)BOOL isReceivebox;
 
 @end

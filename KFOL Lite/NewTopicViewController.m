@@ -70,10 +70,8 @@
     
     
      [@"post.php" postWithStringContent:[NSString stringWithFormat:@"atc_title=%@&atc_content=%@&step=2&action=new&fid=%@&verify=%@",tileTextField.text,contentTextView.text,[threadDictionary objectForKey:@"ThreadFID"],[threadDictionary objectForKey:@"verify"]] returnResponse:nil error:nil];
+    [self dismissModalViewControllerAnimated:YES];
      return;
-     
-    
-    NSLog(@"send Bug");
 }
 
 -(void)cancel:(id)sender

@@ -14,17 +14,18 @@
 
 @interface PostTableViewController : UITableViewController
 {
-    NSMutableDictionary *thePost;
+    NSMutableDictionary *thePost,*pagesInfo;
     NSData *post_php_html;
     NSMutableArray *postArray,*postHeightArray,*indexPaths;
     PostReadView *HeightwebView;
     NSInteger loadCount;
     UIWebView *webview;
     NSString *threadFID;
-    int reloadCount;
+    NSMutableString *URLString;
+    int reloadCount,addmoreIdentifier;
     
-    EGORefreshTableHeaderView *_refreshHeaderView;
-    BOOL _reloading;
+    EGORefreshTableHeaderView *_refreshHeaderView,*_addMoreFooterView;
+    BOOL _reloading,_adding;
 }
 
 @property(atomic,retain)NSString *threadFID;
@@ -36,5 +37,8 @@
 
 -(void)reloadTableViewDataSource;
 -(void)doneLoadingTableViewData;
+
+-(void)addMoreTablewViewDataSourece;
+-(void)doneAddMoreTableViewData;
 
 @end

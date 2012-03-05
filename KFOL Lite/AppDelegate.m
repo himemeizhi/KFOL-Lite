@@ -41,9 +41,12 @@
     nav.tabBarItem.title=@"Post";
     [rootControllers addObject:nav];
     
-    controller=[[MessageTableViewController alloc]init];
+    controller=[[MessageTableViewController alloc]initWithReceiveBox:YES];
+    ((MessageTableViewController *)controller).receivebox=controller;
+    ((MessageTableViewController *)controller).sentbox=[[MessageTableViewController alloc]initWithReceiveBox:NO];
     ((indexTableViewController*)[[nav viewControllers]objectAtIndex:0]).messageTable=controller;
     controller.tableView.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
+    ((MessageTableViewController *)controller).sentbox.tableView.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
     nav=[[UINavigationController alloc]initWithRootViewController:controller];
     nav.tabBarItem.title=@"Message";
     [rootControllers addObject:nav];

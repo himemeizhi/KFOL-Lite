@@ -164,7 +164,6 @@
         refreshTableHeaderView.delegate=self;
         [self.tableView addSubview:refreshTableHeaderView];
         _refreshHeaderView=refreshTableHeaderView;
-        _refreshHeaderView.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
     }
     [_refreshHeaderView refreshLastUpdatedDate];
     reloadCount=-1;
