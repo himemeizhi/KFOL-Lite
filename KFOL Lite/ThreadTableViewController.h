@@ -16,14 +16,14 @@
 @interface ThreadTableViewController : UITableViewController
 {
     NSMutableDictionary *theThread;
-    NSMutableDictionary *subThreadDetails;
+    NSMutableDictionary *subThreadDetails,*pagesInfo;
     NSData *thread_php_html;
     NSMutableArray *postArray,*headArray,*ThreadPHP;
     PostTableViewController *subController;
     int reloadCount;
     
-    EGORefreshTableHeaderView *_refreshHeaderView;
-    BOOL _reloading;
+    EGORefreshTableHeaderView *_refreshHeaderView,*_addMoreFooterView;
+    BOOL _reloading,_adding;
 }
 
 -(id)initWithThreadDictionary:(NSDictionary *)ThreadDetail;
@@ -32,5 +32,8 @@
 
 -(void)reloadTableViewDataSource;
 -(void)doneLoadingTableViewData;
+
+-(void)addMoreTablewViewDataSourece;
+-(void)doneAddMoreTableViewData;
 
 @end

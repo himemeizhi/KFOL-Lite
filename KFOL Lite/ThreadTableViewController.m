@@ -33,11 +33,22 @@
 {
     reloadCount++;
     
-    thread_php_html=[[@"thread.php?fid=" stringByAppendingString:[theThread objectForKey:@"ThreadFID"]] getWithStringContent:nil returnResponse:nil error:nil];
     NSMutableString *processingNSString=[[NSMutableString alloc]initWithData:thread_php_html encoding:0x80000632];
-    postArray=[[NSMutableArray alloc]init];
-    ThreadPHP=[[NSMutableArray alloc]init];
-    headArray=[[NSMutableArray alloc]init];
+    
+    if ([processingNSString rangeOfString:@">首页</a>"].location!=NSNotFound) {
+        
+        processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"<b> "])];
+        [pagesInfo setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@" "].location)] forKey:@"PageNow"];
+        processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"\">"].location+2];
+        [pagesInfo setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</a>"].location)] forKey:@"PageNext"];
+        if ([[pagesInfo objectForKey:@"PageNext"]compare:@"后10页"]==NSOrderedSame) {
+            [pagesInfo removeObjectForKey:@"PageNext"];
+        }
+        processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"页码: ( "])];
+        processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"/"].location+1];
+        [pagesInfo setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@" )"].location)] forKey:@"PageMax"];
+    }
+    
     
     if ([processingNSString rangeOfString:@"子版块"].location!=NSNotFound) {
         subThreadDetails=[[NSMutableDictionary alloc]init];
@@ -56,6 +67,7 @@
         [subThreadDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@" 时间"].location)] forKey:@"LastPostUserName"];
         processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"时间："])];
         [subThreadDetails setObject:[processingNSString substringWithRange:NSMakeRange(0, 16)] forKey:@"LastPostDate"];
+        if([ThreadPHP indexOfObject:subThreadDetails]==NSNotFound)
         [ThreadPHP addObject:subThreadDetails];
     }
     
@@ -122,9 +134,10 @@
         //        [postProperties setObject:[theThread objectForKey:@"ThreadFID"] forKey:@"ThreadFID"];
         //        [postArray addObject:postProperties];
     }
-    if (headArray.count!=0) {
+    if (headArray.count!=0 && [ThreadPHP indexOfObject:headArray]==NSNotFound) {
         [ThreadPHP addObject:headArray];
     }
+    if([ThreadPHP indexOfObject:postArray]==NSNotFound)
     [ThreadPHP addObject:postArray];
     [ThreadPHP writeToFile:[NSHomeDirectory() stringByAppendingString:@"/tmp/thread.plist"] atomically:YES];
 }
@@ -169,8 +182,21 @@
 
 //    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"KFOL" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonPressed:)];
     
+    
+    thread_php_html=[[NSString stringWithFormat:@"thread.php?fid=%@",[theThread objectForKey:@"ThreadFID"]] getWithStringContent:nil returnResponse:nil error:nil];
+    postArray=[[NSMutableArray alloc]init];
+    ThreadPHP=[[NSMutableArray alloc]init];
+    headArray=[[NSMutableArray alloc]init];
+    pagesInfo=[[NSMutableDictionary alloc]init];
+    
     [self loadHTMLContents];
-
+    
+    if (_addMoreFooterView==nil && [pagesInfo objectForKey:@"PageNext"]!=nil) {
+        _addMoreFooterView=[[EGORefreshTableHeaderView alloc]initWithFrameInBottom:CGRectMake(0, -460, 0, 0)];
+        _addMoreFooterView.delegate=self;
+        [self.tableView addSubview:_addMoreFooterView];
+    }
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -297,6 +323,11 @@
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         cell.imageView.image=[UIImage imageNamed:[[postArray objectAtIndex:indexPath.row]objectForKey:@"TopicType"]];
         cell.textLabel.numberOfLines=[[[postArray objectAtIndex:indexPath.row]objectForKey:@"PostName"]lengthOfBytesUsingEncoding:0x80000632]/[@"[v0.352更新公告]板块调整+成" lengthOfBytesUsingEncoding:0x80000632]+1;
+        
+        if (indexPath.row+1==[[ThreadPHP objectAtIndex:indexPath.section] count] && indexPath.section+1==ThreadPHP.count) {
+            [_addMoreFooterView setFrame:CGRectMake(0, tableView.contentSize.height+65, tableView.frame.size.width, tableView.bounds.size.height)];
+        }
+        
         return cell;
     }
     
@@ -330,6 +361,9 @@
         else
             cell.imageView.image=[UIImage imageNamed:[[headArray objectAtIndex:indexPath.row]objectForKey:@"HeadTopic"]];
         cell.textLabel.numberOfLines=[[[postArray objectAtIndex:indexPath.row]objectForKey:@"PostName"]lengthOfBytesUsingEncoding:0x80000632]/[@"[v0.352更新公告]板块调整+成" lengthOfBytesUsingEncoding:0x80000632]+1;
+        if (indexPath.row+1==[[ThreadPHP objectAtIndex:indexPath.section] count] && indexPath.section+1==ThreadPHP.count) {
+            [_addMoreFooterView setFrame:CGRectMake(0, tableView.contentSize.height+65, tableView.frame.size.width, tableView.bounds.size.height)];
+        }
         return cell;
     }
         
@@ -343,6 +377,8 @@
     }
     [[[UIAlertView alloc]initWithTitle:@"error" message:@"处理主题列表发生错误" delegate:nil cancelButtonTitle:@"仕方ないね" otherButtonTitles:nil]show];
     }
+    
+    
     return cell;
     
 }
@@ -437,12 +473,14 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
 	
 	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    [_addMoreFooterView egoRefreshScrollViewDidScroll:scrollView];
     
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
 	
 	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    [_addMoreFooterView egoRefreshScrollViewDidEndDragging:scrollView];
 	
 }
 
@@ -468,5 +506,56 @@
 	return [NSDate date]; // should return date data source was last changed
 	
 }
+
+
+#pragma mark -
+#pragma mark Data Source Adding Methods
+
+- (void)addMoreTablewViewDataSourece{
+	
+	//  should be calling your tableviews data source model to reload
+	//  put here just for demo
+    thread_php_html=[[NSString stringWithFormat:@"thread.php?fid=%@&page=%@",[theThread objectForKey:@"ThreadFID"],[pagesInfo objectForKey:@"PageNext"]]getWithStringContent:nil returnResponse:nil error:nil];
+    [self loadHTMLContents];
+    [self.tableView reloadData];
+	_adding = YES;
+	
+}
+
+- (void)doneAddMoreTableViewData{
+	
+	//  model should call this when its done loading
+	_adding = NO;
+    if([pagesInfo objectForKey:@"PageNext"]==nil){
+        [_addMoreFooterView removeFromSuperview];
+    }
+    else{
+        [_addMoreFooterView setFrame:CGRectMake(0, self.tableView.contentSize.height+65, self.tableView.frame.size.width, self.tableView.bounds.size.height)];
+    }
+	[_addMoreFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+	
+}
+
+#pragma mark -
+#pragma mark EGOAddMoreTableFooterDelegate Methods
+
+- (void)egoAddMoreTableFooterDidTriggerAddMore:(EGORefreshTableHeaderView*)view{
+
+	[self addMoreTablewViewDataSourece];
+	[self performSelector:@selector(doneAddMoreTableViewData) withObject:nil afterDelay:0.0];
+	
+}
+
+- (BOOL)egoAddMoreTableFooterDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+	
+	return _adding; // should return if data source model is reloading
+	
+}
+/*
+- (NSDate*)egoAddMoreTableFooterDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+	
+	return [NSDate date]; // should return date data source was last changed
+	
+}*/
 
 @end

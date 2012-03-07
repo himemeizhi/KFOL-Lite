@@ -198,7 +198,6 @@
         [self.tableView addSubview:addMoreTableFooterView];
         _addMoreFooterView=addMoreTableFooterView;
     }
-    [_addMoreFooterView refreshLastUpdatedDate];
     }
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -328,7 +327,7 @@
                     webview.scrollView.scrollEnabled=NO;
                     webview.dataDetectorTypes=UIDataDetectorTypeNone;
                     webview.dataDetectorTypes=UIDataDetectorTypeLink;
-                    if (postArray.count*2==indexPath.row+1) {
+                    if (postArray.count*2==indexPath.row+1 && [pagesInfo objectForKey:@"PageNext"]!=nil) {
                         [_addMoreFooterView setFrame:CGRectMake(0, self.tableView.contentSize.height+65, self.tableView.frame.size.width, 65)];
                     }
                     break;
@@ -428,7 +427,6 @@
     [URLString setString:[NSString stringWithFormat:@"read.php?tid=%@&page=%@",[thePost objectForKey:@"TopicID"],[pagesInfo objectForKey:@"PageNext"]]];
     [self loadHTMLContents];
     [self.tableView reloadData];
-    [_addMoreFooterView refreshLastUpdatedDate];
 	_adding = YES;
 	
 }
@@ -439,7 +437,7 @@
 	_adding = NO;
     if([pagesInfo objectForKey:@"PageNext"]==nil){
         [_addMoreFooterView removeFromSuperview];
-        _addMoreFooterView=nil;
+//        _addMoreFooterView=nil;
     }
     else{
         NSValue *theFrame=[NSValue valueWithCGRect:CGRectMake(0, self.tableView.contentSize.height+65, self.tableView.frame.size.width, 65)];
@@ -506,10 +504,10 @@
 	return _adding; // should return if data source model is reloading
 	
 }
-
+/*
 - (NSDate*)egoAddMoreTableFooterDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
 	
 	return [NSDate date]; // should return date data source was last changed
 	
-}
+}*/
 @end
