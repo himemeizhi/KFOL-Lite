@@ -15,12 +15,14 @@
 {
     NSData *message_php_html;
     NSMutableArray *messageArray;
+    NSMutableDictionary *pagesInfo;
+    NSString *messageBoxURLString;
     MessageReadTableViewController *subController;
     BOOL Login,isReceivebox;
     MessageTableViewController *receivebox,*sentbox;
     
-    EGORefreshTableHeaderView *_refreshHeaderView;
-    BOOL _reloading;
+    EGORefreshTableHeaderView *_refreshHeaderView,*_addMoreFooterView;
+    BOOL _reloading,_adding;
 }
 
 -(void)boxChange;
@@ -30,6 +32,9 @@
 
 -(void)reloadTableViewDataSource;
 -(void)doneLoadingTableViewData;
+
+-(void)addMoreTablewViewDataSourece;
+-(void)doneAddMoreTableViewData;
 
 @property(atomic)BOOL isReceivebox;
 @property(atomic,retain)MessageTableViewController *receivebox;

@@ -63,17 +63,17 @@
 
 -(void)loadHTMLContents
 {
-    messageArray=[[NSMutableArray alloc]init];
+    
     NSMutableString *processingNSString;
-    if(isReceivebox==YES)
-        processingNSString=[[NSMutableString alloc]initWithData:[@"message.php?action=receivebox" getWithStringContent:nil returnResponse:nil error:nil] encoding:0x80000632];
-    else
-        processingNSString=[[NSMutableString alloc]initWithData:[@"message.php?action=scout" getWithStringContent:nil returnResponse:nil error:nil] encoding:0x80000632];
+    
+    processingNSString=[[NSString alloc]initWithData:[messageBoxURLString getWithStringContent:nil returnResponse:nil error:nil] encoding:0x80000632];
     
     if ([processingNSString rangeOfString:@"<span style=\"color:#FF0000;font-weight:bold;font-size:14px;\">您还没有登录或注册"].location!=NSNotFound) {
         Login=NO;
         return;
     }
+    
+    
     
     for(;;)
     {
@@ -99,6 +99,18 @@
     }
     [messageArray writeToFile:[NSHomeDirectory() stringByAppendingString:@"/tmp/message.xml"] atomically:YES];
 
+    if ([processingNSString rangeOfString:@">首页</a>"].location!=NSNotFound) {
+        processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"<b> "])];
+        [pagesInfo setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@" </b>"].location)] forKey:@"PageNow"];
+        processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"\">"].location+2];
+        [pagesInfo setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</a>"].location)] forKey:@"PageNext"];
+        if ([[pagesInfo objectForKey:@"PageNext"]compare:@"后10页"]==NSOrderedSame) {
+            [pagesInfo removeObjectForKey:@"PageNext"];
+        }
+        processingNSString=[processingNSString substringFromIndex:NSMaxRange([processingNSString rangeOfString:@"页码: ( "])];
+        processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@"/"].location+1];
+        [pagesInfo setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@" )"].location)] forKey:@"PageMax"];
+    }
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -133,8 +145,19 @@
     self.navigationItem.leftBarButtonItem.title=@"Receivebox";
     }
 
+    messageArray=[[NSMutableArray alloc]init];
+    messageBoxURLString=[[NSString alloc]initWithFormat:@"message.php?action=%@",isReceivebox?@"receivebox":@"scout"];
+    pagesInfo=[[NSMutableDictionary alloc]init];
+    
     [self loadHTMLContents];
-        // Uncomment the following line to preserve selection between presentations.
+    
+    if (pagesInfo!=nil && [[pagesInfo objectForKey:@"PageNow"] intValue]<[[pagesInfo objectForKey:@"PageMax"] intValue] && [pagesInfo objectForKey:@"PageNext"]!=nil && _addMoreFooterView==nil) {
+            EGORefreshTableHeaderView *addMoreTableFooterView=[[EGORefreshTableHeaderView alloc]initWithFrameInBottom:CGRectMake(0, -460, 0, 0)];
+            addMoreTableFooterView.delegate=self;
+            [self.tableView addSubview:addMoreTableFooterView];
+            _addMoreFooterView=addMoreTableFooterView;
+    }
+    // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
@@ -210,6 +233,10 @@
     cell.textLabel.textColor=[UIColor colorWithRed:0x55/255.0 green:0x11/255.0 blue:0xdd/255.0 alpha:1];
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }
+    if(indexPath.row+1==messageArray.count){
+        [_addMoreFooterView setFrame:CGRectMake(0, tableView.contentSize.height+65, tableView.frame.size.width, tableView.bounds.size.height)];
+    }
+    
     return cell;
 }
 
@@ -296,12 +323,14 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
 	
 	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    [_addMoreFooterView egoRefreshScrollViewDidScroll:scrollView];
     
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
 	
 	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    [_addMoreFooterView egoRefreshScrollViewDidEndDragging:scrollView];
 	
 }
 
@@ -312,7 +341,7 @@
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
 	
 	[self reloadTableViewDataSource];
-	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0.0];
 	
 }
 
@@ -325,6 +354,51 @@
 - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
 	
 	return [NSDate date]; // should return date data source was last changed
+	
+}
+
+#pragma mark -
+#pragma mark Data Source Adding Methods
+
+- (void)addMoreTablewViewDataSourece{
+	
+	//  should be calling your tableviews data source model to reload
+	//  put here just for demo
+    messageBoxURLString=nil;
+    messageBoxURLString=[NSString stringWithFormat:@"message.php?action=%@&page=%@",isReceivebox?@"receivebox":@"scout",[pagesInfo objectForKey:@"PageNext"]];
+    [self loadHTMLContents];
+    [self.tableView reloadData];
+	_adding = YES;
+	
+}
+
+- (void)doneAddMoreTableViewData{
+	
+	//  model should call this when its done loading
+	_adding = NO;
+    if([pagesInfo objectForKey:@"PageNext"]==nil){
+        [_addMoreFooterView removeFromSuperview];
+    }
+    else{
+        [_addMoreFooterView setFrame:CGRectMake(0, self.tableView.contentSize.height+65, self.tableView.frame.size.width, self.tableView.bounds.size.height)];
+    }
+	[_addMoreFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+	
+}
+
+#pragma mark -
+#pragma mark EGOAddMoreTableFooterDelegate Methods
+
+- (void)egoAddMoreTableFooterDidTriggerAddMore:(EGORefreshTableHeaderView*)view{
+    
+	[self addMoreTablewViewDataSourece];
+	[self performSelector:@selector(doneAddMoreTableViewData) withObject:nil afterDelay:0.0];
+	
+}
+
+- (BOOL)egoAddMoreTableFooterDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+	
+	return _adding; // should return if data source model is reloading
 	
 }
 

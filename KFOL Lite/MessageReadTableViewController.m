@@ -54,8 +54,11 @@
     [super loadView];
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(replayMessage:)];
     self.tableView.allowsSelection=NO;
+    NSString *processingNSString;
+    self.tableView.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
     
-    NSMutableString *processingNSString=[[NSMutableString alloc]initWithData:[[@"message.php?action=readscout&mid=" stringByAppendingString:[theMessage objectForKey:@"MessageID"]]getWithStringContent:nil returnResponse:nil error:nil] encoding:0x80000632];
+    processingNSString=[[NSString alloc]initWithData:[[[NSString alloc]initWithFormat:@"message.php?action=%@&mid=%@",isReceivebox?@"read":@"readscout",[theMessage objectForKey:@"MessageID"]]getWithStringContent:nil returnResponse:nil error:nil] encoding:0x80000632];
+    
     messageDictionary=[[NSMutableDictionary alloc]initWithDictionary:theMessage];
     if ([processingNSString rangeOfString:@"您的操作因为以下原因无法继续"].location!=NSNotFound) {
         [messageDictionary setObject:@"<div style=\"padding:0px 0px 15px 50px; line-height:150;\">         <span style=\"color:#FF0000;font-weight:bold;font-size:14px;\">该信息已被删除</span></div>" forKey:@"MessageContent"];
@@ -65,7 +68,6 @@
     
     processingNSString=[processingNSString substringFromIndex:[processingNSString rangeOfString:@">"].location+1];
     [messageDictionary setObject:[processingNSString substringWithRange:NSMakeRange(0, [processingNSString rangeOfString:@"</td>"].location)] forKey:@"MessageContent"];
-    NSLog(messageDictionary.description);
 }
 
 
@@ -172,6 +174,9 @@
 //            [webview loadHTMLString:[messageDictionary objectForKey:@"MessageContent"] baseURL:[NSURL URLWithString:@"http://bbs.9gal.com"]];
             readWebView=[[ReadView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width)];
             [cell addSubview:readWebView];
+            readWebView.scrollView.contentInset=UIEdgeInsetsMake(-7.5f, 0,-7.5f, 0);
+            readWebView.dataDetectorTypes=UIDataDetectorTypeNone;
+            readWebView.dataDetectorTypes=UIDataDetectorTypeLink;
             readWebView.delegate=readWebView;
             readWebView.tableViewToReload=self.tableView;
             [readWebView loadHTMLString:[[@"<style type=\"text/css\">blockquote{border:1px solid #9999ff;padding:5px;margin:0;}</style><div id='xxx' style='background-color:#f7f7ff;color:#300060;'>" stringByAppendingString:[messageDictionary objectForKey:@"MessageContent"]]stringByAppendingString:@"</div>"]baseURL:[NSURL URLWithString:@"http://bbs.9gal.com"]];
@@ -214,6 +219,7 @@
 //            [(UIWebView *)[cell viewWithTag:10] scrollView].scrollEnabled=NO;
             break;
     }}
+    cell.backgroundColor=[UIColor colorWithRed:0xf7/255.0 green:0xf7/255.0 blue:1 alpha:1];
 //        cell.selectionStyle=UITableViewCellSelectionStyleNone;}
         return cell;
 }
